@@ -894,15 +894,6 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     }));
   };
 
-    return;
-  }
-
-    setForm((prev) => ({
-      ...prev,
-      ...patch,
-    }));
-  };
-
   useEffect(() => {
     if (identMode !== "WORLD" || !dnBirthSnapshot) return;
 
