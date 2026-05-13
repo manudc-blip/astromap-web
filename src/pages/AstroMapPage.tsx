@@ -65,6 +65,15 @@ const TABS: { key: TabKey; fr: string; en: string }[] = [
   { key: "interpretation", fr: "Interprétation", en: "Interpretation" },
 ];
 
+const TRIAL_PERSON = "einstein";
+
+function isTrialMode() {
+  if (typeof window === "undefined") return false;
+
+  const params = new URLSearchParams(window.location.search);
+  return params.get("trial")?.toLowerCase() === TRIAL_PERSON;
+}
+
 const TRIAL_QUERY = "trial";
 const TRIAL_PERSON = "einstein";
 
@@ -775,6 +784,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
   const visualUpdateTimerRef = useRef<number | null>(null);
   const spinPreviewActiveRef = useRef(false);
   const spinPreviewBaseFormRef = useRef<PageFormState | null>(null);
+  const trialEinsteinLoadedRef = useRef(false);
   const previousPlanetPositionsRef = useRef<Map<string, SvgPlanetPosition>>(
     new Map()
   );
@@ -829,27 +839,27 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     setCurrentThemeOwnerTitle("");
   };
 
-const patchForm = (patch: Partial<AstroForm>) => {
-  if (
-    trialMode &&
-    Object.keys(patch).some(
-      (key) =>
-        key !== "language" &&
-        key !== "transitAspectMode" &&
-        key !== "transitPanelExpanded"
-    )
-  ) {
-    return;
-  }
+  const patchForm = (patch: Partial<AstroForm>) => {
+    if (
+      trialMode &&
+      Object.keys(patch).some(
+        (key) =>
+          key !== "language" &&
+          key !== "transitAspectMode" &&
+          key !== "transitPanelExpanded"
+      )
+    ) {
+      return;
+    }
 
-  if (identMode === "WORLD" && "name" in patch) {
-    setDnSelectedActive(false);
-    setDnSource("");
-    setDnBirthSnapshot(null);
-    setCurrentThemeOwnerTitle("");
-    setDnSuggestions([]);
-    setShowDnSuggestions(false);
-  }
+    if (identMode === "WORLD" && "name" in patch) {
+      setDnSelectedActive(false);
+      setDnSource("");
+      setDnBirthSnapshot(null);
+      setCurrentThemeOwnerTitle("");
+      setDnSuggestions([]);
+      setShowDnSuggestions(false);
+    }
 
     const mustLeaveDnMode =
       identMode === "WORLD" &&
@@ -866,14 +876,23 @@ const patchForm = (patch: Partial<AstroForm>) => {
         "tz",
       ].some((key) => key in patch);
 
-  if (mustLeaveDnMode) {
-    leaveDnMode();
+    if (mustLeaveDnMode) {
+      leaveDnMode();
+
+      setForm((prev) => ({
+        ...prev,
+        ...patch,
+        name: "",
+      }));
+
+      return;
+    }
 
     setForm((prev) => ({
       ...prev,
       ...patch,
-      name: "",
     }));
+  };
 
     return;
   }
@@ -1450,6 +1469,8 @@ const patchForm = (patch: Partial<AstroForm>) => {
   }, [activeTab, form.transitAspectMode, submittedForm]);
 
   const handleReset = () => {
+    if (trialMode) return;
+    
     if (autoCalcTimerRef.current !== null) {
       window.clearTimeout(autoCalcTimerRef.current);
       autoCalcTimerRef.current = null;
@@ -1880,6 +1901,34 @@ const patchForm = (patch: Partial<AstroForm>) => {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (!trialMode || trialEinsteinLoadedRef.current || !dnRecords.length) return;
+
+    const einstein = searchDnRecords(dnRecords, "Einstein").find((rec) =>
+      [rec.prenom, rec.nom, rec.displayName]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+        .includes("einstein")
+    );
+
+    if (!einstein) return;
+
+    trialEinsteinLoadedRef.current = true;
+    setIdentMode("WORLD");
+
+    void handleSelectDnSuggestion({
+      id: "trial-einstein",
+      label: einstein.displayName,
+      subLabel: buildDnSubLabel(einstein),
+      record: einstein,
+    } as DnSuggestionItem);
+
+    window.setTimeout(() => {
+      document.querySelector<HTMLButtonElement>(".astromap-action-btn--primary")?.click();
+    }, 700);
+  }, [trialMode, dnRecords, handleSelectDnSuggestion]);
 
   useEffect(() => {
     const host = svgHostRef.current;
