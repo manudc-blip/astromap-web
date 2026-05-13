@@ -65,6 +65,14 @@ const TABS: { key: TabKey; fr: string; en: string }[] = [
   { key: "interpretation", fr: "Interprétation", en: "Interpretation" },
 ];
 
+const TRIAL_QUERY = "trial";
+const TRIAL_PERSON = "einstein";
+
+function isTrialMode() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(TRIAL_QUERY)?.toLowerCase() === TRIAL_PERSON;
+}
+
 type CacheState = Partial<Record<TabKey, string>>;
 type CitySuggestion = SidebarSuggestion & {
   name: string;
@@ -796,6 +804,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
 
   const language = form.language;
   const isEn = language === "en";
+  const trialMode = isTrialMode();
 
   const goPrevTab = () => {
     const currentIndex = TABS.findIndex((tab) => tab.key === activeTab);
@@ -820,15 +829,27 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     setCurrentThemeOwnerTitle("");
   };
 
-  const patchForm = (patch: Partial<AstroForm>) => {
-    if (identMode === "WORLD" && "name" in patch) {
-      setDnSelectedActive(false);
-      setDnSource("");
-      setDnBirthSnapshot(null);
-      setCurrentThemeOwnerTitle("");
-      setDnSuggestions([]);
-      setShowDnSuggestions(false);
-    }
+const patchForm = (patch: Partial<AstroForm>) => {
+  if (
+    trialMode &&
+    Object.keys(patch).some(
+      (key) =>
+        key !== "language" &&
+        key !== "transitAspectMode" &&
+        key !== "transitPanelExpanded"
+    )
+  ) {
+    return;
+  }
+
+  if (identMode === "WORLD" && "name" in patch) {
+    setDnSelectedActive(false);
+    setDnSource("");
+    setDnBirthSnapshot(null);
+    setCurrentThemeOwnerTitle("");
+    setDnSuggestions([]);
+    setShowDnSuggestions(false);
+  }
 
     const mustLeaveDnMode =
       identMode === "WORLD" &&
