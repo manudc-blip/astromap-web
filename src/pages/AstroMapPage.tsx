@@ -74,6 +74,13 @@ function isTrialMode() {
   return params.get("trial")?.toLowerCase() === TRIAL_PERSON;
 }
 
+function getInitialLanguage(): "fr" | "en" {
+  if (typeof window === "undefined") return "fr";
+
+  const params = new URLSearchParams(window.location.search);
+  return params.get("lang")?.toLowerCase() === "en" ? "en" : "fr";
+}
+
 type CacheState = Partial<Record<TabKey, string>>;
 type CitySuggestion = SidebarSuggestion & {
   name: string;
@@ -737,9 +744,14 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     </div>
   );
 }
-  const [form, setForm] = useState<PageFormState>(() =>
-    withUiDefaults(createDefaultFormState())
-  );
+  const [form, setForm] = useState<PageFormState>(() => {
+    const initial = withUiDefaults(createDefaultFormState());
+
+    return {
+      ...initial,
+      language: getInitialLanguage(),
+    };
+  });
   const [submittedForm, setSubmittedForm] = useState<PageFormState | null>(null);
   const [activeTab, setActiveTab] = useState<TabKey>("ecliptic");
   const [cache, setCache] = useState<CacheState>({});
