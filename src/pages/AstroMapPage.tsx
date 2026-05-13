@@ -74,14 +74,6 @@ function isTrialMode() {
   return params.get("trial")?.toLowerCase() === TRIAL_PERSON;
 }
 
-const TRIAL_QUERY = "trial";
-const TRIAL_PERSON = "einstein";
-
-function isTrialMode() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get(TRIAL_QUERY)?.toLowerCase() === TRIAL_PERSON;
-}
-
 type CacheState = Partial<Record<TabKey, string>>;
 type CitySuggestion = SidebarSuggestion & {
   name: string;
