@@ -1900,32 +1900,36 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
   }, []);
 
   useEffect(() => {
-    if (!trialMode || trialEinsteinLoadedRef.current || !dnRecords.length) return;
-
-    const einstein = searchDnRecords(dnRecords, "Einstein").find((rec) =>
-      [rec.prenom, rec.nom, rec.displayName]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase()
-        .includes("einstein")
-    );
-
-    if (!einstein) return;
+    if (!trialMode || trialEinsteinLoadedRef.current) return;
 
     trialEinsteinLoadedRef.current = true;
+
+    const trialForm: PageFormState = {
+      ...withUiDefaults(createDefaultFormState()),
+      name: "Albert Einstein",
+      day: "14",
+      month: "03",
+      year: "1879",
+      hour: "11",
+      minute: "30",
+      timeRef: "HO",
+      cityQuery: "Ulm, Allemagne",
+      latitude: "48.3984",
+      longitude: "9.9916",
+      tz: "Europe/Berlin",
+      language: getInitialLanguage(),
+    };
+
     setIdentMode("WORLD");
+    setCurrentThemeOwnerTitle("Albert Einstein");
+    setDnSource(language === "en" ? "Trial chart" : "Thème d’essai");
+    setDnSelectedActive(true);
+    setCoordsLocked(true);
+    setForm(trialForm);
 
-    void handleSelectDnSuggestion({
-      id: "trial-einstein",
-      label: einstein.displayName,
-      subLabel: buildDnSubLabel(einstein),
-      record: einstein,
-    } as DnSuggestionItem);
-
-    window.setTimeout(() => {
-      document.querySelector<HTMLButtonElement>(".astromap-action-btn--primary")?.click();
-    }, 700);
-  }, [trialMode, dnRecords, handleSelectDnSuggestion]);
+    immediateAutoCalcRef.current = true;
+    runQueuedAutoCompute(trialForm);
+  }, [trialMode, language, runQueuedAutoCompute]);
 
   useEffect(() => {
     const host = svgHostRef.current;
