@@ -2099,6 +2099,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
           dnSource={dnSource}
           coordsLocked={coordsLocked}
           coordsDisplayMode={coordsDisplayMode}
+          locked={trialMode}
           showDnSuggestions={showDnSuggestions}
           dnSuggestions={dnSuggestions}
           showCitySuggestions={showCitySuggestions}
