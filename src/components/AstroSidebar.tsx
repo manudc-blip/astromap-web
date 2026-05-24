@@ -74,6 +74,7 @@ export interface AstroSidebarProps {
   cityHint?: string;
   coordsLocked?: boolean;
   coordsDisplayMode?: CoordsDisplayMode;
+  locked?: boolean;
 
   showDnSuggestions?: boolean;
   dnSuggestions?: SidebarSuggestion[];
@@ -318,6 +319,7 @@ export default function AstroSidebar({
   cityHint,
   coordsLocked = false,
   coordsDisplayMode = "DEC",
+  locked = false,
   showDnSuggestions = false,
   dnSuggestions = [],
   showCitySuggestions = false,
@@ -381,7 +383,11 @@ export default function AstroSidebar({
   };
 
   return (
-    <div className="astromap-sidebar-panel">
+    <fieldset
+      className="astromap-sidebar-panel"
+      disabled={locked}
+      style={{ border: 0, margin: 0, padding: 0 }}
+    >
       <div className="astromap-logo-wrap">
         <img className="astromap-logo" src={logoSrc} alt="GéoAstro" />
         <div className="astromap-logo-title">
@@ -796,6 +802,6 @@ export default function AstroSidebar({
           </button>
         </Tooltip>
       </section>
-    </div>
+    </fieldset>
   );
 }
