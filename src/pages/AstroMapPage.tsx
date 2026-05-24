@@ -1299,13 +1299,15 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
   useEffect(() => {
     if (didAutoCalculateOnMountRef.current) return;
 
+    if (trialMode) return;
+
     didAutoCalculateOnMountRef.current = true;
     immediateAutoCalcRef.current = true;
 
     window.setTimeout(() => {
       handleCalculate();
     }, 0);
-  }, [handleCalculate]);
+  }, [handleCalculate, trialMode]);
 
   const runQueuedAutoCompute = useCallback(
     async (requestedForm: AstroFormState) => {
