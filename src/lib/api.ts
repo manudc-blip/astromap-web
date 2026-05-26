@@ -26,6 +26,28 @@ export type EclipticLayoutPayload = {
 
 const API_BASE = (import.meta.env.VITE_ASTROMAP_API_BASE || "http://localhost:8000").replace(/\/+$/, "");
 
+function extractApiErrorMessage(text: string, fallback: string) {
+  try {
+    const data = JSON.parse(text);
+
+    if (typeof data?.detail === "string") {
+      return data.detail;
+    }
+
+    if (typeof data?.message === "string") {
+      return data.message;
+    }
+
+    if (typeof data?.error === "string") {
+      return data.error;
+    }
+  } catch {
+    // Réponse non JSON
+  }
+
+  return text || fallback;
+}
+
 async function apiText(path: string, init?: RequestInit): Promise<string> {
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
@@ -38,7 +60,9 @@ async function apiText(path: string, init?: RequestInit): Promise<string> {
   const text = await res.text();
 
   if (!res.ok) {
-    throw new Error(text || `HTTP ${res.status}`);
+    throw new Error(
+      extractApiErrorMessage(text, `HTTP ${res.status}`)
+    );
   }
 
   return text;
@@ -56,7 +80,9 @@ async function apiJson<T>(path: string, init?: RequestInit): Promise<T> {
   const text = await res.text();
 
   if (!res.ok) {
-    throw new Error(text || `HTTP ${res.status}`);
+    throw new Error(
+      extractApiErrorMessage(text, `HTTP ${res.status}`)
+    );
   }
 
   return JSON.parse(text) as T;
