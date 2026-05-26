@@ -1672,19 +1672,6 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     setExportDialogOpen(true);
   };
 
-      if (!submittedForm) return;
-      setExportKind("pdf");
-      setExportDialogOpen(true);
-      return;
-    }
-
-    const current = cache[activeTab];
-    if (!current) return;
-
-    setExportKind("pdf");
-    setExportDialogOpen(true);
-  };
-
   const runGraphicExport = async () => {
     const current = cache[activeTab];
     const exportCurrent = current ? stripSvgChartTitle(current) : "";
