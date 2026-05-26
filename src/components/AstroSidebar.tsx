@@ -794,7 +794,8 @@ export default function AstroSidebar({
         >
           <button
             type="button"
-            className="astromap-action-btn astromap-action-btn--full"
+            className="astromap-action-btn astromap-action-btn--full astromap-action-btn--disabled"
+            disabled
             onClick={onExport}
           >
             <img src={iconSave} alt="" />
