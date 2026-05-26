@@ -1649,7 +1649,29 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
   };
 
   const handleExport = () => {
+    if (isTrialMode()) {
+      setError(
+        language === "en"
+          ? "Trial mode: export is reserved for the full version."
+          : "Mode essai : l’export est réservé à la version complète."
+      );
+      return;
+    }
+
     if (activeTab === "interpretation") {
+      if (!submittedForm) return;
+      setExportKind("pdf");
+      setExportDialogOpen(true);
+      return;
+    }
+
+    const current = cache[activeTab];
+    if (!current) return;
+
+    setExportKind("pdf");
+    setExportDialogOpen(true);
+  };
+
       if (!submittedForm) return;
       setExportKind("pdf");
       setExportDialogOpen(true);
