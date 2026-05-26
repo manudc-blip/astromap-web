@@ -1115,3 +1115,14 @@ body,
     animation: none;
   }
 }
+
+.astromap-action-btn--disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.astromap-action-btn--disabled:hover {
+  background: #e5e7eb;
+}
