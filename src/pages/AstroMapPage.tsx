@@ -833,7 +833,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
   const language = form.language;
   const isEn = language === "en";
   const fullAccessMode = hasFullAccessMode();
-  const trialMode = isTrialMode() && !fullAccessMode;
+  const trialMode = !fullAccessMode && isTrialMode();
 
   const goPrevTab = () => {
     const currentIndex = TABS.findIndex((tab) => tab.key === activeTab);
