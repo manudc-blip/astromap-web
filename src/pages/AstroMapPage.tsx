@@ -872,7 +872,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     setCurrentThemeOwnerTitle("");
   };
 
-  const patchForm = (patch: Partial<AstroForm>) => {
+  const patchForm = (patch: Partial<AstroSidebarForm>) => {
     if (
       trialMode &&
       Object.keys(patch).some(
