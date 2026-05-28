@@ -34,7 +34,8 @@ function getAccessHeaders() {
 
   if (access === "full") {
     return {
-      "X-GeoAstro-Access": "full"
+      "X-GeoAstro-Mode": "full",
+      "X-GeoAstro-Access-Key": import.meta.env.VITE_GEOASTRO_FULL_ACCESS_KEY || ""
     };
   }
 
