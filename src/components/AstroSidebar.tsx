@@ -75,6 +75,7 @@ export interface AstroSidebarProps {
   coordsLocked?: boolean;
   coordsDisplayMode?: CoordsDisplayMode;
   locked?: boolean;
+  trialMode?: boolean;
 
   showDnSuggestions?: boolean;
   dnSuggestions?: SidebarSuggestion[];
@@ -320,6 +321,7 @@ export default function AstroSidebar({
   coordsLocked = false,
   coordsDisplayMode = "DEC",
   locked = false,
+  trialMode = false,
   showDnSuggestions = false,
   dnSuggestions = [],
   showCitySuggestions = false,
