@@ -26,6 +26,21 @@ export type EclipticLayoutPayload = {
 
 const API_BASE = (import.meta.env.VITE_ASTROMAP_API_BASE || "http://localhost:8000").replace(/\/+$/, "");
 
+function getAccessHeaders() {
+  if (typeof window === "undefined") return {};
+
+  const params = new URLSearchParams(window.location.search);
+  const access = params.get("access")?.toLowerCase();
+
+  if (access === "full") {
+    return {
+      "X-GeoAstro-Access": "full"
+    };
+  }
+
+  return {};
+}
+
 function extractApiErrorMessage(text: string, fallback: string) {
   try {
     const data = JSON.parse(text);
@@ -51,10 +66,11 @@ function extractApiErrorMessage(text: string, fallback: string) {
 async function apiText(path: string, init?: RequestInit): Promise<string> {
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers || {}),
-    },
+headers: {
+  "Content-Type": "application/json",
+  ...getAccessHeaders(),
+  ...(init?.headers || {}),
+},
   });
 
   const text = await res.text();
@@ -71,10 +87,11 @@ async function apiText(path: string, init?: RequestInit): Promise<string> {
 async function apiJson<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers || {}),
-    },
+headers: {
+  "Content-Type": "application/json",
+  ...getAccessHeaders(),
+  ...(init?.headers || {}),
+},
   });
 
   const text = await res.text();
