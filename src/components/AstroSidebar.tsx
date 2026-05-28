@@ -786,20 +786,22 @@ export default function AstroSidebar({
               <span>{t.compute}</span>
             </button>
           </Tooltip>
-        <div
-          style={{
-            marginTop: "6px",
-            marginBottom: "4px",
-            fontSize: "11px",
-            color: "#6b7280",
-            lineHeight: 1.25,
-            textAlign: "center",
-          }}
-        >
-          {form.language === "en"
-            ? "Trial mode: Einstein chart only."
-            : "Mode essai : thème Einstein uniquement."}
-        </div>
+        {trialMode ? (
+          <div
+            style={{
+              marginTop: "6px",
+              marginBottom: "4px",
+              fontSize: "11px",
+              color: "#6b7280",
+              lineHeight: 1.25,
+              textAlign: "center",
+            }}
+          >
+            {form.language === "en"
+              ? "Trial mode: Einstein chart only."
+              : "Mode essai : thème Einstein uniquement."}
+          </div>
+        ) : null}
         </div>
 
         <Tooltip
