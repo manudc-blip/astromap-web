@@ -2124,6 +2124,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
           coordsLocked={coordsLocked}
           coordsDisplayMode={coordsDisplayMode}
           locked={trialMode}
+          trialMode={trialMode}
           showDnSuggestions={showDnSuggestions}
           dnSuggestions={dnSuggestions}
           showCitySuggestions={showCitySuggestions}
