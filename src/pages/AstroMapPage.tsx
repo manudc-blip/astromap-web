@@ -74,6 +74,20 @@ function isTrialMode() {
   return params.get("trial")?.toLowerCase() === TRIAL_PERSON;
 }
 
+function hasFullAccessMode() {
+  if (typeof window === "undefined") return false;
+
+  const params = new URLSearchParams(window.location.search);
+  const access = params.get("access")?.toLowerCase();
+
+  if (access === "full") {
+    window.localStorage.setItem("geoastro_astromap_access", "full");
+    return true;
+  }
+
+  return window.localStorage.getItem("geoastro_astromap_access") === "full";
+}
+
 function getInitialLanguage(): "fr" | "en" {
   if (typeof window === "undefined") return "fr";
 
@@ -818,7 +832,8 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
 
   const language = form.language;
   const isEn = language === "en";
-  const trialMode = isTrialMode();
+  const fullAccessMode = hasFullAccessMode();
+  const trialMode = isTrialMode() && !fullAccessMode;
 
   const goPrevTab = () => {
     const currentIndex = TABS.findIndex((tab) => tab.key === activeTab);
@@ -1649,7 +1664,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
   };
 
   const handleExport = () => {
-    if (isTrialMode()) {
+    if (trialMode) {
       setError(
         language === "en"
           ? "Trial mode: export is reserved for the full version."
