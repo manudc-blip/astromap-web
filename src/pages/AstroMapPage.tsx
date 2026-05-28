@@ -71,6 +71,17 @@ function isTrialMode() {
   if (typeof window === "undefined") return false;
 
   const params = new URLSearchParams(window.location.search);
+  const access = params.get("access")?.toLowerCase();
+
+  if (access === "full") {
+    window.localStorage.setItem("geoastro_astromap_access", "full");
+    return false;
+  }
+
+  if (window.localStorage.getItem("geoastro_astromap_access") === "full") {
+    return false;
+  }
+
   return params.get("trial")?.toLowerCase() === TRIAL_PERSON;
 }
 
