@@ -2462,22 +2462,8 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     </div>
   </div>
 
-        <div
-          style={{
-            borderTop: "1px solid #c9c9c9",
-            padding: "4px 8px",
-            fontSize: 12,
-            color: "#374151",
-            background: "#fafaf7",
-          }}
-        >
-          {themePayload
-            ? isEn
-              ? "Backend connected"
-              : "Backend connecté"
-            : isEn
-            ? "No calculated chart yet"
-            : "Aucun thème calculé pour l’instant"}
+        <div className="astromap-footer">
+          © 2025 GéoAstro – AstroMap v1.0
         </div>
       </main>
 
