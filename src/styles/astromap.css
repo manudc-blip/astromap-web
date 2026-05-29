@@ -20,7 +20,9 @@ body,
 .astromap-app {
   display: grid;
   grid-template-columns: 292px 1fr;
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
   background: var(--astromap-ui-bg);
   color: var(--astromap-text);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -588,7 +590,8 @@ body,
 
 .astromap-main {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100vh;
   min-width: 0;
   border-left: none;
 }
@@ -626,13 +629,15 @@ body,
 
 .astromap-stage {
   position: relative;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   background: #ffffff;
 }
 
 .astromap-canvas-host {
   position: relative;
-  min-height: calc(100vh - 125px);
+  height: 100%;
+  min-height: 0;
   background: #ffffff;
   border: 1px solid var(--astromap-panel-border);
   box-sizing: border-box;
