@@ -2461,10 +2461,6 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
       </div>
     </div>
   </div>
-
-        <div className="astromap-footer">
-          © 2025 GéoAstro – AstroMap v1.0
-        </div>
       </main>
 
 {exportDialogOpen ? (
