@@ -2273,6 +2273,43 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
               </button>
             </Tooltip>
           ))}
+
+          <button
+            type="button"
+            className="astromap-tab"
+            style={{ marginLeft: "auto" }}
+            onClick={async () => {
+              try {
+                await fetch("https://geoastro.org/api/auth/logout", {
+                  method: "POST",
+                  credentials: "include",
+                });
+              } finally {
+                window.localStorage.removeItem("geoastro_astromap_access");
+                window.location.href = "https://geoastro.org/";
+              }
+            }}
+          >
+            {isEn ? "Log out" : "Déconnexion"}
+          </button>
+        </div>
+            <Tooltip
+              key={tab.key}
+              tipKey={`tab_${tab.key}` as const}
+              lang={form.language}
+              variant="tab"
+            >
+              <button
+                type="button"
+                className={`astromap-tab ${
+                  activeTab === tab.key ? "astromap-tab--active" : ""
+                }`}
+                onClick={() => setActiveTab(tab.key)}
+              >
+                {isEn ? tab.en : tab.fr}
+              </button>
+            </Tooltip>
+          ))}
         </div>
 
         <div
