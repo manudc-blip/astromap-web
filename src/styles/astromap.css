@@ -632,8 +632,10 @@ body,
 
 .astromap-canvas-host {
   position: relative;
-  min-height: calc(100vh - 110px);
+  min-height: calc(100vh - 90px);
   background: #ffffff;
+  border: 1px solid #c9c9c9;
+  box-sizing: border-box;
 }
 
 .gm-svg-panel {
