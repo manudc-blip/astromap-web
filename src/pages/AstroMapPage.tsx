@@ -2463,11 +2463,11 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
   </div>
         <div
           style={{
-            height: 22,
+            height: 18,
             textAlign: "center",
-            fontSize: 12,
+            fontSize: 11,
             color: "#6b7280",
-            lineHeight: "22px",
+            lineHeight: "18px",
             background: "#ffffff",
           }}
         >
