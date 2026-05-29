@@ -2461,6 +2461,17 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
       </div>
     </div>
   </div>
+        <div
+          style={{
+            height: 22,
+            textAlign: "center",
+            fontSize: 12,
+            color: "#6b7280",
+            lineHeight: "22px",
+          }}
+        >
+          © 2025 GéoAstro – AstroMap v1.0
+        </div>   
       </main>
 
 {exportDialogOpen ? (
