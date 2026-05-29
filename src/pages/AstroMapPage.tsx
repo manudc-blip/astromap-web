@@ -2310,6 +2310,25 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
               </button>
             </Tooltip>
           ))}
+
+          <button
+            type="button"
+            className="astromap-tab"
+            style={{ marginLeft: "auto" }}
+            onClick={async () => {
+              try {
+                await fetch("https://geoastro.org/api/auth/logout", {
+                  method: "POST",
+                  credentials: "include",
+                });
+              } finally {
+                window.localStorage.removeItem("geoastro_astromap_access");
+                window.location.href = "https://geoastro.org/";
+              }
+            }}
+          >
+            {isEn ? "Log out" : "Déconnexion"}
+          </button>
         </div>
 
         <div
