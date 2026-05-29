@@ -590,7 +590,7 @@ body,
   display: grid;
   grid-template-rows: auto 1fr;
   min-width: 0;
-  border-left: 1px solid var(--astromap-panel-border);
+  border-left: none;
 }
 
 .astromap-tabs {
@@ -632,9 +632,9 @@ body,
 
 .astromap-canvas-host {
   position: relative;
-  min-height: calc(100vh - 90px);
+  min-height: calc(100vh - 125px);
   background: #ffffff;
-  border: 1px solid #c9c9c9;
+  border: 1px solid var(--astromap-panel-border);
   box-sizing: border-box;
 }
 
