@@ -810,12 +810,11 @@ export default function AstroSidebar({
           tipKey="sidebar_export"
           lang={form.language}
         >
-          <button
-            type="button"
-            className="astromap-action-btn astromap-action-btn--full astromap-action-btn--disabled"
-            disabled
-            onClick={onExport}
-          >
+<button
+  type="button"
+  className="astromap-action-btn astromap-action-btn--full"
+  onClick={onExport}
+>
             <img src={iconSave} alt="" />
             <span>{t.export}</span>
           </button>
