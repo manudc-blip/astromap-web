@@ -2468,10 +2468,11 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
             fontSize: 12,
             color: "#6b7280",
             lineHeight: "22px",
+            background: "#ffffff",
           }}
         >
           © 2025 GéoAstro – AstroMap v1.0
-        </div>   
+        </div>  
       </main>
 
 {exportDialogOpen ? (
