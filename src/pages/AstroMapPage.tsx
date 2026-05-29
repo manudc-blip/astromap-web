@@ -2468,7 +2468,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
             fontSize: 12,
             color: "#6b7280",
             lineHeight: "22px",
-            background: "#ffffff",
+            background: "var(--astromap-ui-bg)",
             borderTop: "1px solid #c9c9c9",
           }}
         >
