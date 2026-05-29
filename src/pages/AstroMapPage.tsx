@@ -2469,6 +2469,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
             color: "#6b7280",
             lineHeight: "22px",
             background: "#ffffff",
+            borderTop: "1px solid #c9c9c9",
           }}
         >
           © 2025 GéoAstro – AstroMap v1.0
