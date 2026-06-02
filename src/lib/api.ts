@@ -26,20 +26,43 @@ export type EclipticLayoutPayload = {
 
 const API_BASE = (import.meta.env.VITE_ASTROMAP_API_BASE || "http://localhost:8000").replace(/\/+$/, "");
 
-function getAccessHeaders() {
-  if (typeof window === "undefined") return {};
+function storeAccessTokenFromUrl() {
+  if (typeof window === "undefined") return;
 
   const params = new URLSearchParams(window.location.search);
-  const access = params.get("access")?.toLowerCase();
+  const token = params.get("access_token");
 
-  if (access === "full") {
-    return {
-      "X-GeoAstro-Mode": "full",
-      "X-GeoAstro-Access-Key": import.meta.env.VITE_GEOASTRO_FULL_ACCESS_KEY || ""
-    };
+  if (!token) {
+    return;
   }
 
-  return {};
+  sessionStorage.setItem("geoastro_astromap_access_token", token);
+
+  params.delete("access_token");
+
+  const cleanQuery = params.toString();
+  const cleanUrl =
+    window.location.pathname +
+    (cleanQuery ? `?${cleanQuery}` : "") +
+    window.location.hash;
+
+  window.history.replaceState({}, document.title, cleanUrl);
+}
+
+function getAccessHeaders(): HeadersInit {
+  if (typeof window === "undefined") return {};
+
+  storeAccessTokenFromUrl();
+
+  const token = sessionStorage.getItem("geoastro_astromap_access_token");
+
+  if (!token) {
+    return {};
+  }
+
+  return {
+    Authorization: `Bearer ${token}`,
+  };
 }
 
 function extractApiErrorMessage(text: string, fallback: string) {
