@@ -74,17 +74,6 @@ function getAccessHeaders() {
   return {};
 }
 
-  const token = sessionStorage.getItem("geoastro_astromap_access_token");
-
-  if (!token) {
-    return {};
-  }
-
-  return {
-    Authorization: `Bearer ${token}`,
-  };
-}
-
 function extractApiErrorMessage(text: string, fallback: string) {
   try {
     const data = JSON.parse(text);
