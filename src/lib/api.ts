@@ -54,6 +54,15 @@ function getAccessHeaders(): HeadersInit {
 
   storeAccessTokenFromUrl();
 
+  const params = new URLSearchParams(window.location.search);
+  const trial = params.get("trial")?.toLowerCase();
+
+  if (trial === "einstein") {
+    return {
+      "X-GeoAstro-Trial": "einstein",
+    };
+  }
+
   const token = sessionStorage.getItem("geoastro_astromap_access_token");
 
   if (!token) {
