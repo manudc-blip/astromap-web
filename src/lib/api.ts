@@ -49,19 +49,30 @@ function storeAccessTokenFromUrl() {
   window.history.replaceState({}, document.title, cleanUrl);
 }
 
-function getAccessHeaders(): HeadersInit {
+function getAccessHeaders() {
   if (typeof window === "undefined") return {};
 
-  storeAccessTokenFromUrl();
-
   const params = new URLSearchParams(window.location.search);
-  const trial = params.get("trial")?.toLowerCase();
+  const accessToken = params.get("access_token");
 
-  if (trial === "einstein") {
+  if (accessToken) {
+    window.localStorage.setItem("geoastro_astromap_access_token", accessToken);
+
     return {
-      "X-GeoAstro-Trial": "einstein",
+      Authorization: `Bearer ${accessToken}`,
     };
   }
+
+  const storedToken = window.localStorage.getItem("geoastro_astromap_access_token");
+
+  if (storedToken) {
+    return {
+      Authorization: `Bearer ${storedToken}`,
+    };
+  }
+
+  return {};
+}
 
   const token = sessionStorage.getItem("geoastro_astromap_access_token");
 
