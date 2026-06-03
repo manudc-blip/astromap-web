@@ -2235,17 +2235,21 @@ setForm((prev) => {
   return finalNext;
 });
           }}
-setForm((prev) => {
-  const next = shiftDatePart(prev, part, step);
+          onShiftTransitDate={(part, step) => {
+            if (!spinPreviewActiveRef.current) {
+              immediateAutoCalcRef.current = true;
+            }
 
-  if (submittedForm) {
-    immediateAutoCalcRef.current = true;
-    runQueuedAutoCompute(next);
-  }
+            setForm((prev) => {
+              const next = shiftDatePart(prev, part, step);
 
-  return next;
-});
-            setForm((prev) => shiftDatePart(prev, part, step));
+              if (submittedForm) {
+                immediateAutoCalcRef.current = true;
+                runQueuedAutoCompute(next);
+              }
+
+              return next;
+            });
           }}
           onCompute={handleCalculate}
           onReset={handleReset}
