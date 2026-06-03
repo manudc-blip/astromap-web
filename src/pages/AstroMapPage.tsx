@@ -1440,7 +1440,7 @@ try {
     return () => {
       cancelled = true;
     };
-  }, [activeTab, submittedForm, cache]);
+  }, [activeTab, submittedForm]);
 
   useEffect(() => {
     if (!submittedForm) return;
