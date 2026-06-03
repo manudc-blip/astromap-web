@@ -26,6 +26,48 @@ export type EclipticLayoutPayload = {
 
 const API_BASE = (import.meta.env.VITE_ASTROMAP_API_BASE || "http://localhost:8000").replace(/\/+$/, "");
 
+const apiMemoryCache = new Map<string, Promise<string>>();
+
+function isCacheableApiCall(path: string, init?: RequestInit) {
+  const method = (init?.method || "GET").toUpperCase();
+
+  if (method !== "POST") return false;
+
+  return [
+    "/theme",
+    "/theme/svg",
+    "/theme/ecliptic-layout",
+    "/theme/domitude-svg",
+    "/ret/svg",
+    "/transits",
+    "/transits/svg",
+    "/aspects/svg",
+    "/interpretation/html",
+  ].includes(path);
+}
+
+function buildApiCacheKey(path: string, init?: RequestInit) {
+  const method = (init?.method || "GET").toUpperCase();
+  const body = typeof init?.body === "string" ? init.body : "";
+
+  const headers = new Headers({
+    ...getAccessHeaders(),
+    ...(init?.headers || {}),
+  });
+
+  const mode = headers.has("Authorization")
+    ? "full"
+    : headers.has("X-GeoAstro-Trial")
+      ? `trial:${headers.get("X-GeoAstro-Trial")}`
+      : "public";
+
+  return `${method}|${path}|${mode}|${body}`;
+}
+
+export function clearAstroMapApiCache() {
+  apiMemoryCache.clear();
+}
+
 function storeAccessTokenFromUrl() {
   if (typeof window === "undefined") return;
 
@@ -36,7 +78,8 @@ function storeAccessTokenFromUrl() {
     return;
   }
 
-  sessionStorage.setItem("geoastro_astromap_access_token", token);
+  localStorage.setItem("geoastro_astromap_access_token", token);
+  storeAccessTokenFromUrl();
 
   params.delete("access_token");
 
@@ -97,44 +140,48 @@ function extractApiErrorMessage(text: string, fallback: string) {
 }
 
 async function apiText(path: string, init?: RequestInit): Promise<string> {
-  const res = await fetch(`${API_BASE}${path}`, {
-    ...init,
-headers: {
-  "Content-Type": "application/json",
-  ...getAccessHeaders(),
-  ...(init?.headers || {}),
-},
-  });
+  const cacheable = isCacheableApiCall(path, init);
+  const cacheKey = cacheable ? buildApiCacheKey(path, init) : "";
 
-  const text = await res.text();
-
-  if (!res.ok) {
-    throw new Error(
-      extractApiErrorMessage(text, `HTTP ${res.status}`)
-    );
+  if (cacheable && apiMemoryCache.has(cacheKey)) {
+    return apiMemoryCache.get(cacheKey)!;
   }
 
-  return text;
+  const requestPromise = fetch(`${API_BASE}${path}`, {
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...getAccessHeaders(),
+      ...(init?.headers || {}),
+    },
+  })
+    .then(async (res) => {
+      const text = await res.text();
+
+      if (!res.ok) {
+        throw new Error(
+          extractApiErrorMessage(text, `HTTP ${res.status}`)
+        );
+      }
+
+      return text;
+    })
+    .catch((err) => {
+      if (cacheable) {
+        apiMemoryCache.delete(cacheKey);
+      }
+      throw err;
+    });
+
+  if (cacheable) {
+    apiMemoryCache.set(cacheKey, requestPromise);
+  }
+
+  return requestPromise;
 }
 
 async function apiJson<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
-    ...init,
-headers: {
-  "Content-Type": "application/json",
-  ...getAccessHeaders(),
-  ...(init?.headers || {}),
-},
-  });
-
-  const text = await res.text();
-
-  if (!res.ok) {
-    throw new Error(
-      extractApiErrorMessage(text, `HTTP ${res.status}`)
-    );
-  }
-
+  const text = await apiText(path, init);
   return JSON.parse(text) as T;
 }
 
