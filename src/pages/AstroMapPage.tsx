@@ -1443,10 +1443,10 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     }
 
     const delay = spinPreviewActiveRef.current
-      ? 60
+      ? 90
       : immediateAutoCalcRef.current
-        ? 0
-        : 250;
+        ? 120
+        : 600;
 
     immediateAutoCalcRef.current = false;
 
