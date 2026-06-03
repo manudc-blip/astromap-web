@@ -1252,25 +1252,20 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
       return;
     }
 
-if (tab === "transits") {
-  const transitReq = buildTransitsRequestPayload(currentForm);
+    if (tab === "transits") {
+      const transitReq = buildTransitsRequestPayload(currentForm);
+      const [svg, json] = await Promise.all([
+        getTransitsSvg(transitReq),
+        getTransitsJson(transitReq),
+      ]);
 
-  const svg = await getTransitsSvg(transitReq);
-
-  setCache((prev) => ({ ...prev, transits: svg }));
-
-  getTransitsJson(transitReq)
-    .then((json) => {
       const root = (json as any)?.data ?? (json as any);
       const transitPart = root?.transit ?? root;
-      setTransitsPayload(transitPart as ChartPayload);
-    })
-    .catch(() => {
-      // Le SVG reste affiché même si les détails JSON échouent ou sont lents.
-    });
 
-  return;
-}
+      setTransitsPayload(transitPart as ChartPayload);
+      setCache((prev) => ({ ...prev, transits: svg }));
+      return;
+    }
 
     if (tab === "ecliptic") {
       const [svg, layout] = await Promise.all([
@@ -1307,7 +1302,7 @@ if (tab === "transits") {
 
       setThemePayload(themeData.data as ChartPayload);
       setTransitsPayload(null);
-      setCache((prev) => prev);
+      setCache({});
       setSelectedPlanet(null);
       setSelectedOrigin(activeTab === "transits" ? "transits" : "natal");
       setSubmittedForm(form);
@@ -1390,7 +1385,7 @@ if (tab === "transits") {
               setSubmittedForm(nextSubmitted);
               setThemePayload(themeData.data as ChartPayload);
               setTransitsPayload(null);
-              setCache((prev) => prev);
+              setCache((prev) => keepOnlyActiveTabCache(prev, activeTab));
               setSelectedPlanet(null);
               setSelectedOrigin(activeTab === "transits" ? "transits" : "natal");
 
@@ -1420,13 +1415,10 @@ if (tab === "transits") {
     let cancelled = false;
 
     (async () => {
-try {
-  if (!cache[activeTab]) {
-    setLoading(true);
-  }
-
-  await loadTab(activeTab, submittedForm, false);
-} catch (err) {
+      try {
+        setLoading(true);
+        await loadTab(activeTab, submittedForm, false);
+      } catch (err) {
         if (!cancelled) {
           setError(err instanceof Error ? err.message : "Erreur inconnue");
         }
@@ -1442,34 +1434,39 @@ try {
     };
   }, [activeTab, submittedForm]);
 
-useEffect(() => {
-  if (!submittedForm) return;
-  if (autoCalcKey === submittedAutoCalcKey) return;
+  useEffect(() => {
+    if (!submittedForm) return;
+    if (autoCalcKey === submittedAutoCalcKey) return;
 
-  if (autoCalcTimerRef.current !== null) {
-    window.clearTimeout(autoCalcTimerRef.current);
-  }
-
-  const delay = immediateAutoCalcRef.current ? 80 : 600;
-  immediateAutoCalcRef.current = false;
-
-  autoCalcTimerRef.current = window.setTimeout(() => {
-    runQueuedAutoCompute({ ...form });
-  }, delay);
-
-  return () => {
     if (autoCalcTimerRef.current !== null) {
       window.clearTimeout(autoCalcTimerRef.current);
-      autoCalcTimerRef.current = null;
     }
-  };
-}, [
-  autoCalcKey,
-  submittedAutoCalcKey,
-  submittedForm,
-  form,
-  runQueuedAutoCompute,
-]);
+
+    const delay = spinPreviewActiveRef.current
+      ? 90
+      : immediateAutoCalcRef.current
+        ? 0
+        : 600;
+
+    immediateAutoCalcRef.current = false;
+
+    autoCalcTimerRef.current = window.setTimeout(() => {
+      runQueuedAutoCompute({ ...form });
+    }, delay);
+
+    return () => {
+      if (autoCalcTimerRef.current !== null) {
+        window.clearTimeout(autoCalcTimerRef.current);
+        autoCalcTimerRef.current = null;
+      }
+    };
+  }, [
+    autoCalcKey,
+    submittedAutoCalcKey,
+    submittedForm,
+    form,
+    runQueuedAutoCompute,
+  ]);
 
   useEffect(() => {
     setSelectedOrigin(activeTab === "transits" ? "transits" : "natal");
@@ -2187,8 +2184,9 @@ useEffect(() => {
             })
           }
           onShiftNatalDate={(part, step) => {
-            immediateAutoCalcRef.current = true;
-
+            if (!spinPreviewActiveRef.current) {
+              immediateAutoCalcRef.current = true;
+            }
             const leaveDn = identMode === "WORLD";
 
             if (leaveDn) {
@@ -2201,8 +2199,9 @@ useEffect(() => {
             });
           }}
           onShiftNatalTime={(part, step) => {
-            immediateAutoCalcRef.current = true;
-
+            if (!spinPreviewActiveRef.current) {
+              immediateAutoCalcRef.current = true;
+            }
             const leaveDn = identMode === "WORLD";
 
             if (leaveDn) {
@@ -2215,7 +2214,9 @@ useEffect(() => {
             });
           }}
           onShiftTransitDate={(part, step) => {
-            immediateAutoCalcRef.current = true;
+            if (!spinPreviewActiveRef.current) {
+              immediateAutoCalcRef.current = true;
+            }
             setForm((prev) => shiftDatePart(prev, part, step));
           }}
           onCompute={handleCalculate}
