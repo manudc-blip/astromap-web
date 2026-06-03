@@ -1252,20 +1252,25 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
       return;
     }
 
-    if (tab === "transits") {
-      const transitReq = buildTransitsRequestPayload(currentForm);
-      const [svg, json] = await Promise.all([
-        getTransitsSvg(transitReq),
-        getTransitsJson(transitReq),
-      ]);
+if (tab === "transits") {
+  const transitReq = buildTransitsRequestPayload(currentForm);
 
+  const svg = await getTransitsSvg(transitReq);
+
+  setCache((prev) => ({ ...prev, transits: svg }));
+
+  getTransitsJson(transitReq)
+    .then((json) => {
       const root = (json as any)?.data ?? (json as any);
       const transitPart = root?.transit ?? root;
-
       setTransitsPayload(transitPart as ChartPayload);
-      setCache((prev) => ({ ...prev, transits: svg }));
-      return;
-    }
+    })
+    .catch(() => {
+      // Le SVG reste affiché même si les détails JSON échouent ou sont lents.
+    });
+
+  return;
+}
 
     if (tab === "ecliptic") {
       const [svg, layout] = await Promise.all([
