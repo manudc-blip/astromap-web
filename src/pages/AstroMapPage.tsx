@@ -1445,7 +1445,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     const delay = spinPreviewActiveRef.current
       ? 90
       : immediateAutoCalcRef.current
-        ? 120
+        ? 0
         : 600;
 
     immediateAutoCalcRef.current = false;
