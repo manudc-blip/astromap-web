@@ -2369,7 +2369,9 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
             ((activeTab === "ecliptic" && eclipticLayout) ? (
               <div
                 ref={svgHostRef}
-                className="gm-svg-panel astromap-chart-fade-in"
+                className={`gm-svg-panel astromap-chart-fade-in ${
+                  isVisualUpdating ? "gm-svg-panel--updating" : ""
+                }`}
               >
                 <EclipticChart
                   layout={eclipticLayout}
@@ -2379,7 +2381,9 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
             ) : (
               <div
                 ref={svgHostRef}
-                className="gm-svg-panel astromap-chart-fade-in"
+                className={`gm-svg-panel astromap-chart-fade-in ${
+                  isVisualUpdating ? "gm-svg-panel--updating" : ""
+                }`}
                 dangerouslySetInnerHTML={{ __html: currentContent }}
               />
             ))}
