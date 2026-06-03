@@ -477,14 +477,18 @@ export default function AstroSidebar({
             onChange={(e) => onFormChange({ year: e.target.value })}
           />
 
-          <MiniSpinButton
-            label="+"
-            onStep={() => onShiftNatalDate(getFocusedNatalDatePart(), 1)}
-          />
-          <MiniSpinButton
-            label="-"
-            onStep={() => onShiftNatalDate(getFocusedNatalDatePart(), -1)}
-          />
+<MiniSpinButton
+  label="+"
+  onSpinStart={onSpinStart}
+  onSpinEnd={onSpinEnd}
+  onStep={() => onShiftNatalDate(getFocusedNatalDatePart(), 1)}
+/>
+<MiniSpinButton
+  label="-"
+  onSpinStart={onSpinStart}
+  onSpinEnd={onSpinEnd}
+  onStep={() => onShiftNatalDate(getFocusedNatalDatePart(), -1)}
+/>
         </div>
 
         <LabelWithIcon
@@ -697,14 +701,18 @@ export default function AstroSidebar({
                       }
                     />
 
-                    <MiniSpinButton
-                      label="+"
-                      onStep={() => onShiftTransitDate(getFocusedTransitDatePart(), 1)}
-                    />
-                    <MiniSpinButton
-                      label="-"
-                      onStep={() => onShiftTransitDate(getFocusedTransitDatePart(), -1)}
-                    />
+<MiniSpinButton
+  label="+"
+  onSpinStart={onSpinStart}
+  onSpinEnd={onSpinEnd}
+  onStep={() => onShiftTransitDate(getFocusedTransitDatePart(), 1)}
+/>
+<MiniSpinButton
+  label="-"
+  onSpinStart={onSpinStart}
+  onSpinEnd={onSpinEnd}
+  onStep={() => onShiftTransitDate(getFocusedTransitDatePart(), -1)}
+/>
                   </div>
                 </div>
               </div>
