@@ -2186,42 +2186,38 @@ useEffect(() => {
               transitPanelExpanded: !sidebarForm.transitPanelExpanded,
             })
           }
-onShiftNatalDate={(part, step) => {
-  immediateAutoCalcRef.current = true;
+          onShiftNatalDate={(part, step) => {
+            immediateAutoCalcRef.current = true;
 
-  const leaveDn = identMode === "WORLD";
+            const leaveDn = identMode === "WORLD";
 
-  if (leaveDn) {
-    leaveDnMode();
-  }
+            if (leaveDn) {
+              leaveDnMode();
+            }
 
-  setForm((prev) => {
-    const next = shiftDatePart(prev, part, step);
-    return leaveDn ? { ...next, name: "" } : next;
-  });
-}}
+            setForm((prev) => {
+              const next = shiftDatePart(prev, part, step);
+              return leaveDn ? { ...next, name: "" } : next;
+            });
           }}
-        
-onShiftNatalTime={(part, step) => {
-  immediateAutoCalcRef.current = true;
+          onShiftNatalTime={(part, step) => {
+            immediateAutoCalcRef.current = true;
 
-  const leaveDn = identMode === "WORLD";
+            const leaveDn = identMode === "WORLD";
 
-  if (leaveDn) {
-    leaveDnMode();
-  }
+            if (leaveDn) {
+              leaveDnMode();
+            }
 
-  setForm((prev) => {
-    const next = shiftTimePart(prev, part, step);
-    return leaveDn ? { ...next, name: "" } : next;
-  });
-}}
+            setForm((prev) => {
+              const next = shiftTimePart(prev, part, step);
+              return leaveDn ? { ...next, name: "" } : next;
+            });
           }}
-        
-onShiftTransitDate={(part, step) => {
-  immediateAutoCalcRef.current = true;
-  setForm((prev) => shiftDatePart(prev, part, step));
-}}
+          onShiftTransitDate={(part, step) => {
+            immediateAutoCalcRef.current = true;
+            setForm((prev) => shiftDatePart(prev, part, step));
+          }}
           onCompute={handleCalculate}
           onReset={handleReset}
           onExport={handleExport}
