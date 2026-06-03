@@ -1307,7 +1307,7 @@ if (tab === "transits") {
 
       setThemePayload(themeData.data as ChartPayload);
       setTransitsPayload(null);
-      setCache({});
+      setCache((prev) => prev);
       setSelectedPlanet(null);
       setSelectedOrigin(activeTab === "transits" ? "transits" : "natal");
       setSubmittedForm(form);
@@ -1390,7 +1390,7 @@ if (tab === "transits") {
               setSubmittedForm(nextSubmitted);
               setThemePayload(themeData.data as ChartPayload);
               setTransitsPayload(null);
-              setCache((prev) => keepOnlyActiveTabCache(prev, activeTab));
+              setCache((prev) => prev);
               setSelectedPlanet(null);
               setSelectedOrigin(activeTab === "transits" ? "transits" : "natal");
 
@@ -1420,10 +1420,13 @@ if (tab === "transits") {
     let cancelled = false;
 
     (async () => {
-      try {
-        setLoading(true);
-        await loadTab(activeTab, submittedForm, false);
-      } catch (err) {
+try {
+  if (!cache[activeTab]) {
+    setLoading(true);
+  }
+
+  await loadTab(activeTab, submittedForm, false);
+} catch (err) {
         if (!cancelled) {
           setError(err instanceof Error ? err.message : "Erreur inconnue");
         }
@@ -1437,7 +1440,7 @@ if (tab === "transits") {
     return () => {
       cancelled = true;
     };
-  }, [activeTab, submittedForm]);
+  }, [activeTab, submittedForm, cache]);
 
   useEffect(() => {
     if (!submittedForm) return;
