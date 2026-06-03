@@ -79,7 +79,6 @@ function storeAccessTokenFromUrl() {
   }
 
   localStorage.setItem("geoastro_astromap_access_token", token);
-  storeAccessTokenFromUrl();
 
   params.delete("access_token");
 
@@ -91,6 +90,8 @@ function storeAccessTokenFromUrl() {
 
   window.history.replaceState({}, document.title, cleanUrl);
 }
+
+storeAccessTokenFromUrl();
 
 function getAccessHeaders() {
   if (typeof window === "undefined") return {};
