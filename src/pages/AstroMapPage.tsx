@@ -1442,39 +1442,11 @@ try {
     };
   }, [activeTab, submittedForm]);
 
-  useEffect(() => {
-    if (!submittedForm) return;
-    if (autoCalcKey === submittedAutoCalcKey) return;
-
-    if (autoCalcTimerRef.current !== null) {
-      window.clearTimeout(autoCalcTimerRef.current);
-    }
-
-    const delay = spinPreviewActiveRef.current
-      ? 90
-      : immediateAutoCalcRef.current
-        ? 0
-        : 600;
-
-    immediateAutoCalcRef.current = false;
-
-    autoCalcTimerRef.current = window.setTimeout(() => {
-      runQueuedAutoCompute({ ...form });
-    }, delay);
-
-    return () => {
-      if (autoCalcTimerRef.current !== null) {
-        window.clearTimeout(autoCalcTimerRef.current);
-        autoCalcTimerRef.current = null;
-      }
-    };
-  }, [
-    autoCalcKey,
-    submittedAutoCalcKey,
-    submittedForm,
-    form,
-    runQueuedAutoCompute,
-  ]);
+useEffect(() => {
+  // Recalcul automatique désactivé ici :
+  // les boutons + / - lancent directement runQueuedAutoCompute(...)
+  // pour éviter les doubles appels et les effets de course.
+}, []);
 
   useEffect(() => {
     setSelectedOrigin(activeTab === "transits" ? "transits" : "natal");
