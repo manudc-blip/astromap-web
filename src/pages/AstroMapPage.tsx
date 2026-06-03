@@ -2201,10 +2201,17 @@ try {
               leaveDnMode();
             }
 
-            setForm((prev) => {
-              const next = shiftDatePart(prev, part, step);
-              return leaveDn ? { ...next, name: "" } : next;
-            });
+setForm((prev) => {
+  const next = shiftDatePart(prev, part, step);
+  const finalNext = leaveDn ? { ...next, name: "" } : next;
+
+  if (submittedForm) {
+    immediateAutoCalcRef.current = true;
+    runQueuedAutoCompute(finalNext);
+  }
+
+  return finalNext;
+});
           }}
           onShiftNatalTime={(part, step) => {
             if (!spinPreviewActiveRef.current) {
@@ -2216,15 +2223,28 @@ try {
               leaveDnMode();
             }
 
-            setForm((prev) => {
-              const next = shiftTimePart(prev, part, step);
-              return leaveDn ? { ...next, name: "" } : next;
-            });
+setForm((prev) => {
+  const next = shiftTimePart(prev, part, step);
+  const finalNext = leaveDn ? { ...next, name: "" } : next;
+
+  if (submittedForm) {
+    immediateAutoCalcRef.current = true;
+    runQueuedAutoCompute(finalNext);
+  }
+
+  return finalNext;
+});
           }}
-          onShiftTransitDate={(part, step) => {
-            if (!spinPreviewActiveRef.current) {
-              immediateAutoCalcRef.current = true;
-            }
+setForm((prev) => {
+  const next = shiftDatePart(prev, part, step);
+
+  if (submittedForm) {
+    immediateAutoCalcRef.current = true;
+    runQueuedAutoCompute(next);
+  }
+
+  return next;
+});
             setForm((prev) => shiftDatePart(prev, part, step));
           }}
           onCompute={handleCalculate}
