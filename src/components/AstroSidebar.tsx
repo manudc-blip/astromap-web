@@ -479,14 +479,10 @@ export default function AstroSidebar({
 
 <MiniSpinButton
   label="+"
-  onSpinStart={onSpinStart}
-  onSpinEnd={onSpinEnd}
   onStep={() => onShiftNatalDate(getFocusedNatalDatePart(), 1)}
 />
 <MiniSpinButton
   label="-"
-  onSpinStart={onSpinStart}
-  onSpinEnd={onSpinEnd}
   onStep={() => onShiftNatalDate(getFocusedNatalDatePart(), -1)}
 />
         </div>
@@ -703,14 +699,10 @@ export default function AstroSidebar({
 
 <MiniSpinButton
   label="+"
-  onSpinStart={onSpinStart}
-  onSpinEnd={onSpinEnd}
   onStep={() => onShiftTransitDate(getFocusedTransitDatePart(), 1)}
 />
 <MiniSpinButton
   label="-"
-  onSpinStart={onSpinStart}
-  onSpinEnd={onSpinEnd}
   onStep={() => onShiftTransitDate(getFocusedTransitDatePart(), -1)}
 />
                   </div>
