@@ -1443,10 +1443,33 @@ try {
   }, [activeTab, submittedForm]);
 
 useEffect(() => {
-  // Recalcul automatique désactivé ici :
-  // les boutons + / - lancent directement runQueuedAutoCompute(...)
-  // pour éviter les doubles appels et les effets de course.
-}, []);
+  if (!submittedForm) return;
+  if (autoCalcKey === submittedAutoCalcKey) return;
+
+  if (autoCalcTimerRef.current !== null) {
+    window.clearTimeout(autoCalcTimerRef.current);
+  }
+
+  const delay = immediateAutoCalcRef.current ? 80 : 600;
+  immediateAutoCalcRef.current = false;
+
+  autoCalcTimerRef.current = window.setTimeout(() => {
+    runQueuedAutoCompute({ ...form });
+  }, delay);
+
+  return () => {
+    if (autoCalcTimerRef.current !== null) {
+      window.clearTimeout(autoCalcTimerRef.current);
+      autoCalcTimerRef.current = null;
+    }
+  };
+}, [
+  autoCalcKey,
+  submittedAutoCalcKey,
+  submittedForm,
+  form,
+  runQueuedAutoCompute,
+]);
 
   useEffect(() => {
     setSelectedOrigin(activeTab === "transits" ? "transits" : "natal");
@@ -2163,66 +2186,42 @@ useEffect(() => {
               transitPanelExpanded: !sidebarForm.transitPanelExpanded,
             })
           }
-          onShiftNatalDate={(part, step) => {
-            if (!spinPreviewActiveRef.current) {
-              immediateAutoCalcRef.current = true;
-            }
-            const leaveDn = identMode === "WORLD";
+onShiftNatalDate={(part, step) => {
+  immediateAutoCalcRef.current = true;
 
-            if (leaveDn) {
-              leaveDnMode();
-            }
+  const leaveDn = identMode === "WORLD";
 
-setForm((prev) => {
-  const next = shiftDatePart(prev, part, step);
-  const finalNext = leaveDn ? { ...next, name: "" } : next;
-
-  if (submittedForm) {
-    immediateAutoCalcRef.current = true;
-    runQueuedAutoCompute(finalNext);
+  if (leaveDn) {
+    leaveDnMode();
   }
 
-  return finalNext;
-});
+  setForm((prev) => {
+    const next = shiftDatePart(prev, part, step);
+    return leaveDn ? { ...next, name: "" } : next;
+  });
+}}
           }}
-          onShiftNatalTime={(part, step) => {
-            if (!spinPreviewActiveRef.current) {
-              immediateAutoCalcRef.current = true;
-            }
-            const leaveDn = identMode === "WORLD";
+        
+onShiftNatalTime={(part, step) => {
+  immediateAutoCalcRef.current = true;
 
-            if (leaveDn) {
-              leaveDnMode();
-            }
+  const leaveDn = identMode === "WORLD";
 
-setForm((prev) => {
-  const next = shiftTimePart(prev, part, step);
-  const finalNext = leaveDn ? { ...next, name: "" } : next;
-
-  if (submittedForm) {
-    immediateAutoCalcRef.current = true;
-    runQueuedAutoCompute(finalNext);
+  if (leaveDn) {
+    leaveDnMode();
   }
 
-  return finalNext;
-});
+  setForm((prev) => {
+    const next = shiftTimePart(prev, part, step);
+    return leaveDn ? { ...next, name: "" } : next;
+  });
+}}
           }}
-          onShiftTransitDate={(part, step) => {
-            if (!spinPreviewActiveRef.current) {
-              immediateAutoCalcRef.current = true;
-            }
-
-            setForm((prev) => {
-              const next = shiftDatePart(prev, part, step);
-
-              if (submittedForm) {
-                immediateAutoCalcRef.current = true;
-                runQueuedAutoCompute(next);
-              }
-
-              return next;
-            });
-          }}
+        
+onShiftTransitDate={(part, step) => {
+  immediateAutoCalcRef.current = true;
+  setForm((prev) => shiftDatePart(prev, part, step));
+}}
           onCompute={handleCalculate}
           onReset={handleReset}
           onExport={handleExport}
