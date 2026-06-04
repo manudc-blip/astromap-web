@@ -1756,12 +1756,28 @@ const delay = spinPreviewActiveRef.current
   };
 
   const runGraphicExport = async () => {
-    const current = cache[activeTab];
-    const exportCurrent = current ? stripSvgChartTitle(current) : "";
-    if (!current || activeTab === "interpretation") {
-      setExportDialogOpen(false);
-      return;
-    }
+let current = cache[activeTab];
+
+if (
+  activeTab === "ecliptic" &&
+  current === "__ECLIPTIC_LAYOUT_READY__" &&
+  submittedForm
+) {
+  const themeReq = buildThemeRequestPayload(submittedForm);
+  current = await getSvgForTab("ecliptic", themeReq);
+
+  setCache((prev) => ({
+    ...prev,
+    ecliptic: current,
+  }));
+}
+
+const exportCurrent = current ? stripSvgChartTitle(current) : "";
+
+if (!current || activeTab === "interpretation") {
+  setExportDialogOpen(false);
+  return;
+}
 
     try {
       setExportBusy(true);
