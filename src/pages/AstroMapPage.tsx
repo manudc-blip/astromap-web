@@ -1422,7 +1422,6 @@ await loadTab(activeTab, nextSubmitted, true);
 
 if (seq !== computeSeqRef.current) return;
 
-preloadTabs(nextSubmitted, activeTab);
             }
           } catch (err) {
             setError(err instanceof Error ? err.message : "Erreur inconnue");
