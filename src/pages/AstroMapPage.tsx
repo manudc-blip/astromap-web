@@ -1316,29 +1316,22 @@ const handleCalculate = async () => {
 
   try {
     const themeReq = buildThemeRequestPayload(form);
-    const fullData = await getThemeFull(themeReq);
+    const themeData = await getThemeJson(themeReq);
 
     if (seq !== computeSeqRef.current) return;
 
-    setThemePayload(fullData.data as ChartPayload);
+    setThemePayload(themeData.data as ChartPayload);
     setTransitsPayload(null);
-    setEclipticLayout(fullData.ecliptic_layout);
-    setCache({
-      ecliptic: "__ECLIPTIC_LAYOUT_READY__",
-      domitude: fullData.domitude_svg,
-      ret: fullData.ret_svg,
-      aspects: fullData.aspects_svg,
-      interpretation: fullData.interpretation_html,
-    });
+    setCache({});
     setSelectedPlanet(null);
     setSelectedOrigin(activeTab === "transits" ? "transits" : "natal");
     setSubmittedForm(form);
 
-    if (activeTab === "transits") {
-      await loadTab("transits", form, true);
-    }
+    await loadTab(activeTab, form, true);
 
     if (seq !== computeSeqRef.current) return;
+
+    preloadTabs(form, activeTab);
   } catch (err) {
     setError(err instanceof Error ? err.message : "Erreur inconnue");
   } finally {
