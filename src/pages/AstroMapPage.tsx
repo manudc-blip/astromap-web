@@ -1620,9 +1620,10 @@ const delay = spinPreviewActiveRef.current
       ? Promise.resolve(cache.interpretation)
       : getInterpretationHtml(themeReq);
 
-    const eclipticPromise = cache.ecliptic
-      ? Promise.resolve(cache.ecliptic)
-      : getSvgForTab("ecliptic", themeReq);
+    const eclipticPromise =
+      cache.ecliptic && cache.ecliptic !== "__ECLIPTIC_LAYOUT_READY__"
+        ? Promise.resolve(cache.ecliptic)
+        : getSvgForTab("ecliptic", themeReq);
 
     const retPromise = cache.ret
       ? Promise.resolve(cache.ret)
