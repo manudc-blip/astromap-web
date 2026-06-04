@@ -1352,6 +1352,8 @@ const handleCalculate = async () => {
   }
 };
 
+  const didAutoCalculateOnMountRef = useRef(false);
+
   useEffect(() => {
     if (didAutoCalculateOnMountRef.current) return;
 
