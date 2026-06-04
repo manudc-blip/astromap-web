@@ -24,6 +24,15 @@ export type EclipticLayoutPayload = {
   aspect_lines_svg: string[];
 };
 
+export type ThemeFullPayload = {
+  data: ThemeResponsePayload["data"];
+  ecliptic_layout: EclipticLayoutPayload;
+  domitude_svg: string;
+  ret_svg: string;
+  aspects_svg: string;
+  interpretation_html: string;
+};
+
 const API_BASE = (import.meta.env.VITE_ASTROMAP_API_BASE || "http://localhost:8000").replace(/\/+$/, "");
 
 const apiMemoryCache = new Map<string, Promise<string>>();
@@ -35,6 +44,7 @@ function isCacheableApiCall(path: string, init?: RequestInit) {
 
   return [
     "/theme",
+    "/theme/full",
     "/theme/svg",
     "/theme/ecliptic-layout",
     "/theme/domitude-svg",
@@ -198,6 +208,13 @@ export async function searchCities(q: string, lang: "fr" | "en"): Promise<CitySe
 
 export async function getThemeJson(payload: ThemeRequestPayload) {
   return apiJson<ThemeResponsePayload>("/theme", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function getThemeFull(payload: ThemeRequestPayload) {
+  return apiJson<ThemeFullPayload>("/theme/full", {
     method: "POST",
     body: JSON.stringify(payload),
   });
