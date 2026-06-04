@@ -2252,6 +2252,9 @@ const delay = spinPreviewActiveRef.current
             });
           }}
 onShiftTransitDate={(part, step) => {
+  if (!spinPreviewActiveRef.current) {
+    immediateAutoCalcRef.current = true;
+  }
   setForm((prev) => shiftDatePart(prev, part, step));
 }}
           onCompute={handleCalculate}
