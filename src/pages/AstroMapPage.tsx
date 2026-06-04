@@ -1407,20 +1407,11 @@ const handleCalculate = async () => {
               setSubmittedForm(nextSubmitted);
               setSelectedOrigin("transits");
             } else {
-const themeData = await getThemeJson(themeReq);
+await loadTab(activeTab, nextSubmitted, true);
 
 if (seq !== computeSeqRef.current) return;
 
 setSubmittedForm(nextSubmitted);
-setThemePayload(themeData.data as ChartPayload);
-setTransitsPayload(null);
-setCache((prev) => keepOnlyActiveTabCache(prev, activeTab));
-setSelectedPlanet(null);
-setSelectedOrigin(activeTab === "transits" ? "transits" : "natal");
-
-await loadTab(activeTab, nextSubmitted, true);
-
-if (seq !== computeSeqRef.current) return;
 
             }
           } catch (err) {
