@@ -1388,8 +1388,22 @@ const handleCalculate = async () => {
           setError(null);
           setLoading(true);
           setIsVisualUpdating(true);
-          setCache({});
-          setEclipticLayout(null);
+setCache((prev) => {
+  const next: CacheState = {};
+
+  if (activeTab === "transits" && prev.transits) {
+    next.transits = prev.transits;
+  }
+
+  return next;
+});
+
+setEclipticLayout(null);
+setSelectedPlanet(null);
+
+if (activeTab !== "transits") {
+  setTransitsPayload(null);
+}
 
           try {
             const themeReq = buildThemeRequestPayload(nextSubmitted);
