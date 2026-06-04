@@ -1470,11 +1470,21 @@ useEffect(() => {
       window.clearTimeout(autoCalcTimerRef.current);
     }
 
-    const delay = spinPreviewActiveRef.current
-      ? 90
-      : immediateAutoCalcRef.current
-        ? 0
-        : 600;
+const isTransitDateChange =
+  submittedForm &&
+  (
+    form.transitDay !== submittedForm.transitDay ||
+    form.transitMonth !== submittedForm.transitMonth ||
+    form.transitYear !== submittedForm.transitYear
+  );
+
+const delay = spinPreviewActiveRef.current
+  ? 90
+  : isTransitDateChange
+    ? 800
+    : immediateAutoCalcRef.current
+      ? 0
+      : 600;
 
     immediateAutoCalcRef.current = false;
 
