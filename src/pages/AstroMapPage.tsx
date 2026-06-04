@@ -1266,19 +1266,6 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
       return;
     }
 
-const preloadTabs = async (currentForm: AstroFormState, currentTab: TabKey) => {
-  const tabsToPreload: TabKey[] = [
-    "domitude",
-    "ret",
-    "aspects",
-    "interpretation",
-  ].filter((tab) => tab !== currentTab) as TabKey[];
-
-  await Promise.allSettled(
-    tabsToPreload.map((tab) => loadTab(tab, currentForm, true))
-  );
-};
-
 if (tab === "ecliptic") {
   const layout = await getEclipticLayout(themeReq);
 
@@ -1299,6 +1286,19 @@ if (tab === "ecliptic") {
 
     setCache((prev) => ({ ...prev, [tab]: svg }));
   };
+
+  const preloadTabs = async (currentForm: AstroFormState, currentTab: TabKey) => {
+  const tabsToPreload: TabKey[] = [
+    "domitude",
+    "ret",
+    "aspects",
+    "interpretation",
+  ].filter((tab) => tab !== currentTab) as TabKey[];
+
+  await Promise.allSettled(
+    tabsToPreload.map((tab) => loadTab(tab, currentForm, true))
+  );
+};
 
   const handleCalculate = async () => {
     const seq = computeSeqRef.current + 1;
