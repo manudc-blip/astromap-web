@@ -2221,10 +2221,7 @@ const delay = spinPreviewActiveRef.current
               transitPanelExpanded: !sidebarForm.transitPanelExpanded,
             })
           }
-          onShiftNatalDate={(part, step) => {
-            if (!spinPreviewActiveRef.current) {
-              immediateAutoCalcRef.current = true;
-            }
+onShiftNatalDate={(part, step) => {
             const leaveDn = identMode === "WORLD";
 
             if (leaveDn) {
@@ -2236,10 +2233,7 @@ const delay = spinPreviewActiveRef.current
               return leaveDn ? { ...next, name: "" } : next;
             });
           }}
-          onShiftNatalTime={(part, step) => {
-            if (!spinPreviewActiveRef.current) {
-              immediateAutoCalcRef.current = true;
-            }
+onShiftNatalTime={(part, step) => {
             const leaveDn = identMode === "WORLD";
 
             if (leaveDn) {
@@ -2252,9 +2246,6 @@ const delay = spinPreviewActiveRef.current
             });
           }}
 onShiftTransitDate={(part, step) => {
-  if (!spinPreviewActiveRef.current) {
-    immediateAutoCalcRef.current = true;
-  }
   setForm((prev) => shiftDatePart(prev, part, step));
 }}
           onCompute={handleCalculate}
