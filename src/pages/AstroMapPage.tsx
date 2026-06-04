@@ -1388,6 +1388,8 @@ const handleCalculate = async () => {
           setError(null);
           setLoading(true);
           setIsVisualUpdating(true);
+          setCache({});
+          setEclipticLayout(null);
 
           try {
             const themeReq = buildThemeRequestPayload(nextSubmitted);
