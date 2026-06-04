@@ -1266,6 +1266,19 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
       return;
     }
 
+const preloadTabs = async (currentForm: AstroFormState, currentTab: TabKey) => {
+  const tabsToPreload: TabKey[] = [
+    "domitude",
+    "ret",
+    "aspects",
+    "interpretation",
+  ].filter((tab) => tab !== currentTab) as TabKey[];
+
+  await Promise.allSettled(
+    tabsToPreload.map((tab) => loadTab(tab, currentForm, true))
+  );
+};
+
 if (tab === "ecliptic") {
   const layout = await getEclipticLayout(themeReq);
 
@@ -1311,6 +1324,8 @@ if (tab === "ecliptic") {
       await loadTab(activeTab, form, true);
 
       if (seq !== computeSeqRef.current) return;
+
+      preloadTabs(form, activeTab);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erreur inconnue");
     } finally {
@@ -1393,6 +1408,8 @@ if (tab === "ecliptic") {
               await loadTab(activeTab, nextSubmitted, true);
 
               if (seq !== computeSeqRef.current) return;
+
+              preloadTabs(nextSubmitted, activeTab);
             }
           } catch (err) {
             setError(err instanceof Error ? err.message : "Erreur inconnue");
@@ -1410,30 +1427,37 @@ if (tab === "ecliptic") {
     [activeTab, loadTab, stopVisualUpdatingSoon]
   );
 
-  useEffect(() => {
-    if (!submittedForm) return;
+useEffect(() => {
+  if (!submittedForm) return;
 
-    let cancelled = false;
+  const alreadyReady =
+    activeTab === "ecliptic" ? !!eclipticLayout : !!cache[activeTab];
 
-    (async () => {
-      try {
-        setLoading(true);
-        await loadTab(activeTab, submittedForm, false);
-      } catch (err) {
-        if (!cancelled) {
-          setError(err instanceof Error ? err.message : "Erreur inconnue");
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+  if (alreadyReady) {
+    return;
+  }
+
+  let cancelled = false;
+
+  (async () => {
+    try {
+      setLoading(true);
+      await loadTab(activeTab, submittedForm, false);
+    } catch (err) {
+      if (!cancelled) {
+        setError(err instanceof Error ? err.message : "Erreur inconnue");
       }
-    })();
+    } finally {
+      if (!cancelled) {
+        setLoading(false);
+      }
+    }
+  })();
 
-    return () => {
-      cancelled = true;
-    };
-  }, [activeTab, submittedForm]);
+  return () => {
+    cancelled = true;
+  };
+}, [activeTab, submittedForm, cache, eclipticLayout]);
 
   useEffect(() => {
     if (!submittedForm) return;
