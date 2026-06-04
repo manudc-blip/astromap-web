@@ -2251,12 +2251,9 @@ const delay = spinPreviewActiveRef.current
               return leaveDn ? { ...next, name: "" } : next;
             });
           }}
-          onShiftTransitDate={(part, step) => {
-            if (!spinPreviewActiveRef.current) {
-              immediateAutoCalcRef.current = true;
-            }
-            setForm((prev) => shiftDatePart(prev, part, step));
-          }}
+onShiftTransitDate={(part, step) => {
+  setForm((prev) => shiftDatePart(prev, part, step));
+}}
           onCompute={handleCalculate}
           onReset={handleReset}
           onExport={handleExport}
