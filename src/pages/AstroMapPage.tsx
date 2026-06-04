@@ -678,10 +678,9 @@ function findTransitPlanetByPackedFallback(args: {
 
 function keepOnlyActiveTabCache(
   prev: CacheState,
-  activeTab: TabKey
+  _activeTab: TabKey
 ): CacheState {
-  const current = prev[activeTab];
-  return current ? ({ [activeTab]: current } as CacheState) : {};
+  return prev;
 }
 
 function readSvgPlanetPositions(host: HTMLDivElement) {
@@ -1267,16 +1266,18 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
       return;
     }
 
-    if (tab === "ecliptic") {
-      const [svg, layout] = await Promise.all([
-        getSvgForTab("ecliptic", themeReq),
-        getEclipticLayout(themeReq),
-      ]);
+if (tab === "ecliptic") {
+  const layout = await getEclipticLayout(themeReq);
 
-      setEclipticLayout(layout);
-      setCache((prev) => ({ ...prev, ecliptic: svg }));
-      return;
-    }
+  setEclipticLayout(layout);
+
+  setCache((prev) => ({
+    ...prev,
+    ecliptic: prev.ecliptic || "__ECLIPTIC_LAYOUT_READY__",
+  }));
+
+  return;
+}
 
     const svg = await getSvgForTab(
       tab as Exclude<TabKey, "interpretation" | "transits">,
@@ -2365,8 +2366,8 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
           {!!submittedForm &&
             !error &&
             activeTab !== "interpretation" &&
-            !!currentContent &&
-            ((activeTab === "ecliptic" && eclipticLayout) ? (
+(activeTab === "ecliptic" ? !!eclipticLayout : !!currentContent) &&
+((activeTab === "ecliptic" && eclipticLayout) ? (
               <div
                 ref={svgHostRef}
                 className={`gm-svg-panel astromap-chart-fade-in ${
