@@ -1244,9 +1244,18 @@ body,
     overflow: hidden !important;
   }
 
-  .gm-svg-panel svg {
+  .gm-svg-panel--ecliptic svg {
     width: 122% !important;
     max-width: 122% !important;
     margin-left: -16% !important;
+  }
+
+  .gm-svg-panel--domitude svg,
+  .gm-svg-panel--ret svg,
+  .gm-svg-panel--transits svg,
+  .gm-svg-panel--aspects svg {
+    width: 122% !important;
+    max-width: 122% !important;
+    margin-left: -8% !important;
   }
 }
