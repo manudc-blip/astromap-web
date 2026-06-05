@@ -1206,44 +1206,47 @@ body,
 }
 
 @media (max-width: 768px) {
+  .astromap-logo-wrap {
+    display: none !important;
+  }
+
   .gm-details-overlay {
     position: absolute !important;
-    top: 32px !important;
+    top: 34px !important;
     left: 8px !important;
-    right: auto !important;
-    width: auto !important;
     z-index: 5 !important;
   }
 
   .gm-details-card {
-    width: 235px !important;
-    max-width: 235px !important;
-    min-width: 0 !important;
-    padding: 4px 8px !important;
+    width: 185px !important;
+    max-width: 185px !important;
+    padding: 3px 6px !important;
   }
 
   .gm-details-legend {
-    font-size: 14px !important;
-    padding: 0 4px !important;
-  }
-
-  .gm-details-header {
-    gap: 6px !important;
+    font-size: 13px !important;
   }
 
   .gm-details-current {
-    font-size: 13px !important;
-    line-height: 1.15 !important;
+    font-size: 11.5px !important;
+    line-height: 1.1 !important;
   }
 
   .gm-details-copy {
-    font-size: 12px !important;
-    padding: 4px 8px !important;
+    width: 46px !important;
+    min-width: 46px !important;
+    height: 22px !important;
+    font-size: 11px !important;
+    padding: 2px 4px !important;
+  }
+
+  .gm-svg-panel {
+    overflow: hidden !important;
   }
 
   .gm-svg-panel svg {
-    width: 118% !important;
-    max-width: 118% !important;
-    margin-left: -9% !important;
+    width: 125% !important;
+    max-width: 125% !important;
+    margin-left: -12.5% !important;
   }
 }
