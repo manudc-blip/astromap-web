@@ -1218,8 +1218,8 @@ body,
   }
 
   .gm-details-card {
-    width: 145px !important;
-    max-width: 145px !important;
+    width: 125px !important;
+    max-width: 125px !important;
     padding: 2px 4px !important;
   }
 
@@ -1247,6 +1247,6 @@ body,
   .gm-svg-panel svg {
     width: 122% !important;
     max-width: 122% !important;
-    margin-left: -11% !important;
+    margin-left: -14% !important;
   }
 }
