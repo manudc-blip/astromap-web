@@ -1206,17 +1206,41 @@ body,
 }
 
 @media (max-width: 768px) {
-  .astromap-logo-block {
+  .astromap-main {
+    width: 100% !important;
+  }
+
+  .astromap-logo-block,
+  .astromap-brand,
+  .brand-block,
+  .logo-block {
     display: none !important;
   }
 
   .details-panel {
     position: static !important;
-    width: calc(100% - 24px) !important;
-    max-width: none !important;
-    margin: 10px 12px !important;
-    padding: 10px 12px !important;
-    font-size: 14px !important;
+    width: calc(100% - 32px) !important;
+    max-width: 360px !important;
+    margin: 6px auto 8px auto !important;
+    padding: 6px 10px !important;
+    font-size: 13px !important;
+  }
+
+  .details-panel h2,
+  .details-panel legend {
+    font-size: 16px !important;
+  }
+
+  .astromap-canvas-host,
+  .gm-svg-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .gm-svg-panel svg {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
   }
 
   .astromap-tabs {
@@ -1226,7 +1250,7 @@ body,
   }
 
   .astromap-tabs button {
-    min-width: 92px;
+    min-width: 96px;
     padding: 8px 10px;
     font-size: 14px;
   }
