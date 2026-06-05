@@ -2440,9 +2440,9 @@ onShiftTransitDate={(part, step) => {
 ((activeTab === "ecliptic" && eclipticLayout) ? (
               <div
                 ref={svgHostRef}
-                className={`gm-svg-panel astromap-chart-fade-in ${
-                  isVisualUpdating ? "gm-svg-panel--updating" : ""
-                }`}
+className={`gm-svg-panel gm-svg-panel--${activeTab} astromap-chart-fade-in ${
+  isVisualUpdating ? "gm-svg-panel--updating" : ""
+}`}
               >
                 <EclipticChart
                   layout={eclipticLayout}
@@ -2452,9 +2452,9 @@ onShiftTransitDate={(part, step) => {
             ) : (
               <div
                 ref={svgHostRef}
-                className={`gm-svg-panel astromap-chart-fade-in ${
-                  isVisualUpdating ? "gm-svg-panel--updating" : ""
-                }`}
+className={`gm-svg-panel gm-svg-panel--${activeTab} astromap-chart-fade-in ${
+  isVisualUpdating ? "gm-svg-panel--updating" : ""
+}`}
                 dangerouslySetInnerHTML={{ __html: currentContent }}
               />
             ))}
