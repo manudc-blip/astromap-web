@@ -1247,7 +1247,7 @@ body,
   .gm-svg-panel--ecliptic svg {
     width: 122% !important;
     max-width: 122% !important;
-    margin-left: -16% !important;
+    margin-left: -15% !important;
   }
 
   .gm-svg-panel--domitude svg,
@@ -1258,25 +1258,4 @@ body,
     max-width: 122% !important;
     margin-left: -6% !important;
   }
-}
-
-.astromap-interpretation,
-.interpretation-panel,
-.interpretation-content {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  padding: 16px 18px !important;
-  box-sizing: border-box !important;
-  text-align: left !important;
-}
-
-.astromap-interpretation p,
-.interpretation-panel p,
-.interpretation-content p {
-  max-width: none !important;
-  width: 100% !important;
-  font-size: 16px !important;
-  line-height: 1.45 !important;
-  white-space: normal !important;
 }
