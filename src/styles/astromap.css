@@ -1204,3 +1204,30 @@ body,
     padding: 12px 0;
   }
 }
+
+@media (max-width: 768px) {
+  .astromap-logo-block {
+    display: none !important;
+  }
+
+  .details-panel {
+    position: static !important;
+    width: calc(100% - 24px) !important;
+    max-width: none !important;
+    margin: 10px 12px !important;
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+  }
+
+  .astromap-tabs {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .astromap-tabs button {
+    min-width: 92px;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+}
