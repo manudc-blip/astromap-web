@@ -2119,13 +2119,31 @@ if (!current || activeTab === "interpretation") {
             overflow-y: auto;
           }
 
-          .wrap {
-            max-width: none;
-            margin: 0 auto;
-            padding: 8mm 48mm 12mm 48mm;
-            box-sizing: border-box;
-            min-height: 100%;
-          }
+.wrap {
+  max-width: none;
+  margin: 0 auto;
+  padding: 8mm 48mm 12mm 48mm;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+@media (max-width: 768px) {
+  .wrap {
+    padding: 18px 18px 28px 18px;
+  }
+
+  .page-title {
+    font-size: 24px;
+    line-height: 1.15;
+    margin-bottom: 28px;
+  }
+
+  .p {
+    font-size: 16px;
+    line-height: 1.45;
+    text-align: left;
+  }
+}
 
           .page-title {
             font-size: 18pt;
