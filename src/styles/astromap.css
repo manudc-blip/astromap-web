@@ -1218,9 +1218,9 @@ body,
   }
 
   .gm-details-card {
-    width: 160px !important;
-    max-width: 160px !important;
-    padding: 3px 5px !important;
+    width: 145px !important;
+    max-width: 145px !important;
+    padding: 2px 4px !important;
   }
 
   .gm-details-legend {
@@ -1245,8 +1245,8 @@ body,
   }
 
   .gm-svg-panel svg {
-    width: 132% !important;
-    max-width: 132% !important;
-    margin-left: -16% !important;
+    width: 122% !important;
+    max-width: 122% !important;
+    margin-left: -11% !important;
   }
 }
