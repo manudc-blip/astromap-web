@@ -1133,3 +1133,74 @@ body,
 .astromap-action-btn--disabled:hover {
   background: #e5e7eb;
 }
+
+@media (max-width: 768px) {
+  .astromap-app {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .astromap-main {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    width: 100%;
+    border-top: none;
+  }
+
+  .astromap-sidebar-shell {
+    order: 2;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .astromap-sidebar-panel {
+    width: 100%;
+    max-width: none;
+  }
+
+  .astromap-tabs {
+    order: 2;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .astromap-stage {
+    order: 1;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .astromap-canvas-host,
+  .gm-main-grid,
+  .gm-result-wrap {
+    height: auto;
+    min-height: 0;
+    width: 100%;
+  }
+
+  .gm-svg-panel {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .gm-svg-panel svg {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  .astromap-nav-arrows {
+    position: static;
+    justify-content: center;
+    padding: 12px 0;
+  }
+}
