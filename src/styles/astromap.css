@@ -1171,6 +1171,10 @@ body,
     flex-wrap: nowrap;
   }
 
+  .astromap-tabs button {
+    min-width: 110px !important;
+  }
+
   .astromap-stage {
     order: 1;
     overflow: visible;
