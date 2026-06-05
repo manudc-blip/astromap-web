@@ -1206,72 +1206,44 @@ body,
 }
 
 @media (max-width: 768px) {
-  .astromap-logo-wrap {
-    display: none !important;
+  .gm-details-overlay {
+    position: absolute !important;
+    top: 32px !important;
+    left: 8px !important;
+    right: auto !important;
+    width: auto !important;
+    z-index: 5 !important;
   }
 
-  .gm-result-wrap {
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  .gm-svg-panel {
-    order: 1 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  .gm-svg-panel svg {
-    width: 112% !important;
-    max-width: 112% !important;
-    margin-left: -6% !important;
-    height: auto !important;
-  }
-
-  .astromap-nav-arrows {
-    order: 2 !important;
-  }
-
-  .details-panel {
-    order: 3 !important;
-    position: static !important;
-    width: calc(100% - 32px) !important;
-    max-width: 280px !important;
-    margin: 8px auto !important;
-    padding: 6px 10px !important;
-    font-size: 13px !important;
-  }
-
-  .astromap-tabs button {
-    min-width: 96px;
-    padding: 8px 10px;
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 768px) {
-  fieldset.details-panel {
-    width: 300px !important;
-    max-width: 300px !important;
+  .gm-details-card {
+    width: 235px !important;
+    max-width: 235px !important;
     min-width: 0 !important;
     padding: 4px 8px !important;
-    margin: 4px 0 4px 8px !important;
   }
 
-  fieldset.details-panel legend {
-    font-size: 15px !important;
+  .gm-details-legend {
+    font-size: 14px !important;
     padding: 0 4px !important;
   }
 
-  fieldset.details-panel p,
-  fieldset.details-panel div,
-  fieldset.details-panel button {
+  .gm-details-header {
+    gap: 6px !important;
+  }
+
+  .gm-details-current {
     font-size: 13px !important;
+    line-height: 1.15 !important;
+  }
+
+  .gm-details-copy {
+    font-size: 12px !important;
+    padding: 4px 8px !important;
   }
 
   .gm-svg-panel svg {
-    width: 112% !important;
-    max-width: 112% !important;
-    margin-left: -6% !important;
+    width: 118% !important;
+    max-width: 118% !important;
+    margin-left: -9% !important;
   }
 }
