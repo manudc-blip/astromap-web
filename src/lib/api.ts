@@ -117,15 +117,23 @@ function getAccessHeaders() {
     };
   }
 
-  const storedToken = window.localStorage.getItem("geoastro_astromap_access_token");
+const storedToken = window.localStorage.getItem("geoastro_astromap_access_token");
 
-  if (storedToken) {
-    return {
-      Authorization: `Bearer ${storedToken}`,
-    };
-  }
+if (storedToken) {
+  return {
+    Authorization: `Bearer ${storedToken}`,
+  };
+}
 
-  return {};
+const trial = params.get("trial")?.toLowerCase();
+
+if (trial === "einstein") {
+  return {
+    "X-GeoAstro-Trial": "einstein",
+  };
+}
+
+return {};
 }
 
 function extractApiErrorMessage(text: string, fallback: string) {
