@@ -1408,6 +1408,15 @@ if (activeTab !== "transits") {
           try {
             const themeReq = buildThemeRequestPayload(nextSubmitted);
 
+  if (trialMode) {
+    const themeJson = await getThemeJson(themeReq);
+    const root = (themeJson as any)?.data ?? themeJson;
+
+    if (seq !== computeSeqRef.current) return;
+
+    setThemePayload(root as ChartPayload);
+  }
+
             if (spinPreviewActiveRef.current && activeTab === "ecliptic") {
               const layout = await getEclipticLayout(themeReq);
 
@@ -2060,8 +2069,13 @@ if (!current || activeTab === "interpretation") {
     }
 
     const onClick = (event: Event) => {
-      const target = event.target as Element | null;
-      const match = findPlanetFromSvgTarget(target, planetMatchers, activeTab);
+const target = event.target as Element | null;
+
+const planetNode = target?.closest(
+  "g.planet[data-planet], g.natal_planet[data-planet], g.transit_planet[data-planet], g.domitude_planet[data-planet]"
+) as Element | null;
+
+const match = findPlanetFromSvgTarget(planetNode, planetMatchers, activeTab);
 
       if (match) {
         setSelectedPlanet(match.planet);
