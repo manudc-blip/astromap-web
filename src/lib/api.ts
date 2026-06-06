@@ -140,17 +140,6 @@ function getAccessHeaders() {
   return {};
 }
 
-const trial = params.get("trial")?.toLowerCase();
-
-if (trial === "einstein") {
-  return {
-    "X-GeoAstro-Trial": "einstein",
-  };
-}
-
-return {};
-}
-
 function extractApiErrorMessage(text: string, fallback: string) {
   try {
     const data = JSON.parse(text);
