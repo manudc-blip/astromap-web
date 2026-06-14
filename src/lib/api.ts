@@ -153,17 +153,6 @@ function getAccessHeaders() {
   return {};
 }
 
-  const storedToken = window.localStorage.getItem("geoastro_astromap_access_token");
-
-  if (storedToken) {
-    return {
-      Authorization: `Bearer ${storedToken}`,
-    };
-  }
-
-  return {};
-}
-
 function extractApiErrorMessage(text: string, fallback: string) {
   try {
     const data = JSON.parse(text);
