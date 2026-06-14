@@ -1415,14 +1415,12 @@ if (activeTab !== "transits") {
           try {
             const themeReq = buildThemeRequestPayload(nextSubmitted);
 
-  if (trialMode) {
-    const themeJson = await getThemeJson(themeReq);
-    const root = (themeJson as any)?.data ?? themeJson;
+const themeJson = await getThemeJson(themeReq);
+const root = (themeJson as any)?.data ?? themeJson;
 
-    if (seq !== computeSeqRef.current) return;
+if (seq !== computeSeqRef.current) return;
 
-    setThemePayload(root as ChartPayload);
-  }
+setThemePayload(root as ChartPayload);
 
             if (spinPreviewActiveRef.current && activeTab === "ecliptic") {
               const layout = await getEclipticLayout(themeReq);
