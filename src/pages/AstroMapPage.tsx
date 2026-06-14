@@ -1397,14 +1397,6 @@ setCache((prev) => {
 
 setEclipticLayout(null);
 
-// Ne pas effacer la planète sélectionnée pendant les + / -
-// sinon le panneau Détails ne peut pas suivre la mise à jour.
-if (activeTab === "transits") {
-  setSelectedOrigin("transits");
-} else {
-  setSelectedOrigin("natal");
-}
-
 if (activeTab !== "transits") {
   setTransitsPayload(null);
 }
