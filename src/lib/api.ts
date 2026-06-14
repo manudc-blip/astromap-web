@@ -137,6 +137,30 @@ function getAccessHeaders() {
     };
   }
 
+  // Accès complet local/URL simple, utilisé par ton mode ?access=full
+  // À garder seulement si le backend accepte GEOASTRO_FULL_ACCESS_KEY.
+  if (access === "full") {
+    const fullKey = import.meta.env.VITE_GEOASTRO_FULL_ACCESS_KEY;
+
+    if (fullKey) {
+      return {
+        "X-GeoAstro-Mode": "full",
+        "X-GeoAstro-Access-Key": fullKey,
+      };
+    }
+  }
+
+  return {};
+}
+
+  const storedToken = window.localStorage.getItem("geoastro_astromap_access_token");
+
+  if (storedToken) {
+    return {
+      Authorization: `Bearer ${storedToken}`,
+    };
+  }
+
   return {};
 }
 
