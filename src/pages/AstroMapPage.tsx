@@ -844,11 +844,12 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
 
   const language = form.language;
   const isEn = language === "en";
-  const params = new URLSearchParams(window.location.search);
-  const accessParam = params.get("access")?.toLowerCase();
+const params = new URLSearchParams(window.location.search);
+const accessParam = params.get("access")?.toLowerCase();
+const trialParam = params.get("trial")?.toLowerCase();
 
-  const fullAccessMode = accessParam === "full" || hasFullAccessMode();
-  const trialMode = accessParam === "full" ? false : !fullAccessMode && isTrialMode();
+const trialMode = trialParam === TRIAL_PERSON;
+const fullAccessMode = trialMode ? false : accessParam === "full" || hasFullAccessMode();
 
   const goPrevTab = () => {
     const currentIndex = TABS.findIndex((tab) => tab.key === activeTab);
