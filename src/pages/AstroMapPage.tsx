@@ -999,8 +999,13 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
     };
   }, [identMode, dnSelectedActive, form.name, dnRecords]);
 
-  useEffect(() => {
-    const query = form.cityQuery.trim();
+useEffect(() => {
+  if (citySelectionRef.current) {
+    citySelectionRef.current = false;
+    return;
+  }
+
+  const query = form.cityQuery.trim();
 
     if (query.length < 2) {
       setCitySuggestions([]);
