@@ -192,14 +192,18 @@ async function apiText(path: string, init?: RequestInit): Promise<string> {
     return apiMemoryCache.get(cacheKey)!;
   }
 
-  const requestPromise = fetch(`${API_BASE}${path}`, {
-    ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...getAccessHeaders(),
-      ...(init?.headers || {}),
-    },
-  })
+const accessHeaders = getAccessHeaders();
+
+console.log("ACCESS HEADERS", accessHeaders);
+
+const requestPromise = fetch(`${API_BASE}${path}`, {
+  ...init,
+  headers: {
+    "Content-Type": "application/json",
+    ...accessHeaders,
+    ...(init?.headers || {}),
+  },
+})
     .then(async (res) => {
       const text = await res.text();
 
