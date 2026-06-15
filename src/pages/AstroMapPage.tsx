@@ -806,6 +806,7 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
   const [exportBusy, setExportBusy] = useState(false);
   const svgHostRef = useRef<HTMLDivElement | null>(null);
   const autoCalcTimerRef = useRef<number | null>(null);
+  const citySelectionRef = useRef(false);
   const immediateAutoCalcRef = useRef(false);
   const computeSeqRef = useRef(0);
   const autoComputeRunningRef = useRef(false);
@@ -2320,20 +2321,23 @@ onShiftTransitDate={(part, step) => {
           onExport={handleExport}
           onSelectDnSuggestion={handleSelectDnSuggestion}
           onSelectCitySuggestion={(item) => {
-            const city = item as CitySuggestion;
+onSelectCitySuggestion={(item) => {
+  citySelectionRef.current = true;
 
-            setForm((prev) => ({
-              ...prev,
-              cityQuery: city.name,
-              latitude: String(city.lat),
-              longitude: String(city.lon),
-              tz: city.tz,
-            }));
+  const city = item as CitySuggestion;
 
-            setCoordsLocked(true);
-            setCitySuggestions([]);
-            setShowCitySuggestions(false);
-          }}
+  setForm((prev) => ({
+    ...prev,
+    cityQuery: city.name,
+    latitude: String(city.lat),
+    longitude: String(city.lon),
+    tz: city.tz,
+  }));
+
+  setCoordsLocked(true);
+  setCitySuggestions([]);
+  setShowCitySuggestions(false);
+}}
         />
       </div>
 
