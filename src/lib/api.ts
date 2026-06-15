@@ -111,14 +111,36 @@ function getAccessHeaders() {
   const access = params.get("access")?.toLowerCase();
   const trial = params.get("trial")?.toLowerCase();
 
-  if (trial === "einstein" && access !== "full") {
+  // PRIORITÉ ABSOLUE au mode full URL
+  // Sinon un vieux JWT expiré en localStorage écrase le mode full.
+  if (access === "full") {
+    window.localStorage.setItem("geoastro_astromap_access", "full");
+    window.localStorage.removeItem("geoastro_astromap_access_token");
+
+    const fullKey = import.meta.env.VITE_GEOASTRO_FULL_ACCESS_KEY;
+
+    if (fullKey) {
+      return {
+        "X-GeoAstro-Mode": "full",
+        "X-GeoAstro-Access-Key": fullKey,
+      };
+    }
+
+    return {};
+  }
+
+  // Mode essai
+  if (trial === "einstein") {
+    window.localStorage.removeItem("geoastro_astromap_access");
     window.localStorage.removeItem("geoastro_astromap_access_token");
 
     return {
+      "X-GeoAstro-Mode": "trial",
       "X-GeoAstro-Trial": "einstein",
     };
   }
 
+  // Token abonnement uniquement hors ?access=full
   const accessToken = params.get("access_token");
 
   if (accessToken) {
@@ -135,19 +157,6 @@ function getAccessHeaders() {
     return {
       Authorization: `Bearer ${storedToken}`,
     };
-  }
-
-  // Accès complet local/URL simple, utilisé par ton mode ?access=full
-  // À garder seulement si le backend accepte GEOASTRO_FULL_ACCESS_KEY.
-  if (access === "full") {
-    const fullKey = import.meta.env.VITE_GEOASTRO_FULL_ACCESS_KEY;
-
-    if (fullKey) {
-      return {
-        "X-GeoAstro-Mode": "full",
-        "X-GeoAstro-Access-Key": fullKey,
-      };
-    }
   }
 
   return {};
