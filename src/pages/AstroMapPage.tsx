@@ -1099,25 +1099,24 @@ function AstroMapLoader({ isEn }: { isEn: boolean }) {
       let nextTz = form.tz;
       let nextCity = [rec.lieu, rec.pays].filter(Boolean).join(", ");
 
-      if (rec.lieu) {
-        try {
-          const cityMatches = await searchCities(rec.lieu, language);
-          const best = cityMatches[0];
+if (rec.lieu) {
+  try {
+    const cityQuery = [rec.lieu, rec.pays].filter(Boolean).join(", ");
+    const cityMatches = await searchCities(cityQuery, language);
 
-          if (best) {
-            if (nextLat == null || nextLon == null) {
-              nextLat = best.lat;
-              nextLon = best.lon;
-            }
+    const best =
+      cityMatches.find((c) => {
+        if (nextLat == null || nextLon == null) return false;
+        return Math.abs(c.lat - nextLat) < 0.5 && Math.abs(c.lon - nextLon) < 0.5;
+      }) || null;
 
-            if (Number(yyyy) >= 1900 && best.tz) {
-              nextTz = best.tz;
-            }
-          }
-        } catch {
-          // on garde les valeurs courantes
-        }
-      }
+    if (best && Number(yyyy) >= 1900 && best.tz) {
+      nextTz = best.tz;
+    }
+  } catch {
+    // on garde les valeurs DN
+  }
+}
 
       if (Number(yyyy) < 1900 && nextLon != null) {
         const lmt = lonToLmtTz(nextLon);
