@@ -1556,33 +1556,41 @@ const delay = spinPreviewActiveRef.current
     );
   }, [activeTab, form.transitAspectMode, submittedForm]);
 
-  const handleReset = () => {
-    if (trialMode) return;
-    
-    if (autoCalcTimerRef.current !== null) {
-      window.clearTimeout(autoCalcTimerRef.current);
-      autoCalcTimerRef.current = null;
-    }
+const handleReset = () => {
+  if (trialMode) return;
+  
+  if (autoCalcTimerRef.current !== null) {
+    window.clearTimeout(autoCalcTimerRef.current);
+    autoCalcTimerRef.current = null;
+  }
 
-    setForm(withUiDefaults(createDefaultFormState()));
-    setSubmittedForm(null);
-    setThemePayload(null);
-    setTransitsPayload(null);
-    setCache({});
-    setError(null);
-    setCoordsLocked(false);
-    setCitySuggestions([]);
-    setShowCitySuggestions(false);
-    setSelectedPlanet(null);
-    setSelectedOrigin("natal");
-    setActiveTab("ecliptic");
-    setIdentMode("ID");
-    setDnSource("");
-    setDnSelectedActive(false);
-    setDnSuggestions([]);
-    setShowDnSuggestions(false);
-    setCoordsDisplayMode("DEC");
+  const resetForm = {
+    ...withUiDefaults(createDefaultFormState()),
+    language: form.language,
   };
+
+  setForm(resetForm);
+  setSubmittedForm(null);
+  setThemePayload(null);
+  setTransitsPayload(null);
+  setCache({});
+  setError(null);
+  setCoordsLocked(false);
+  setCitySuggestions([]);
+  setShowCitySuggestions(false);
+  setSelectedPlanet(null);
+  setSelectedOrigin("natal");
+  setActiveTab("ecliptic");
+  setIdentMode("ID");
+  setDnSource("");
+  setDnSelectedActive(false);
+  setDnSuggestions([]);
+  setShowDnSuggestions(false);
+  setCoordsDisplayMode("DEC");
+
+  immediateAutoCalcRef.current = true;
+  runQueuedAutoCompute(resetForm);
+};
 
   const buildExportJsonPayload = useMemo(() => {
     if (activeTab === "transits") {
