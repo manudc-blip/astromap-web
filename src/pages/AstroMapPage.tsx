@@ -2325,7 +2325,6 @@ onShiftTransitDate={(part, step) => {
           onReset={handleReset}
           onExport={handleExport}
           onSelectDnSuggestion={handleSelectDnSuggestion}
-          onSelectCitySuggestion={(item) => {
 onSelectCitySuggestion={(item) => {
   citySelectionRef.current = true;
 
