@@ -1722,8 +1722,7 @@ const handleReset = () => {
       ]);
 
       const documentTitle =
-        (themePayload?.meta?.name || submittedForm?.name || "").trim() ||
-        (language === "en" ? "Astrological chart" : "Thème astrologique");
+        language === "en" ? "Astrological chart" : "Thème astrologique";
 
       const dateLine = `${submittedForm?.day}/${submittedForm?.month}/${submittedForm?.year} – ${submittedForm?.hour}:${submittedForm?.minute} (${submittedForm?.timeRef}, ${submittedForm?.tz})`;
       const coordsLine = `${submittedForm?.latitude}, ${submittedForm?.longitude}`;
@@ -1731,7 +1730,7 @@ const handleReset = () => {
       const printableHtml = buildInterpretationLivrableHtml({
         language,
         documentTitle,
-        personName: submittedForm?.name?.trim() || "",
+        personName: form.name?.trim() || submittedForm?.name?.trim() || "",
         dateLine,
         coordsLine,
         interpretationHtml: interpretation,
@@ -1824,8 +1823,7 @@ if (!current || activeTab === "interpretation") {
       const svgMarkup = await inlineSvgImages(exportCurrent);
 
       const documentTitle =
-        (themePayload?.meta?.name || submittedForm?.name || "").trim() ||
-        (language === "en" ? "Astrological chart" : "Thème astrologique");
+        language === "en" ? "Astrological chart" : "Thème astrologique";
 
       const dateLine = `${submittedForm?.day}/${submittedForm?.month}/${submittedForm?.year} – ${submittedForm?.hour}:${submittedForm?.minute} (${submittedForm?.timeRef}, ${submittedForm?.tz})`;
       const coordsLine = `${submittedForm?.latitude}, ${submittedForm?.longitude}`;
@@ -1841,7 +1839,7 @@ if (!current || activeTab === "interpretation") {
       const printableHtml = buildGraphicLivrableHtml({
         language,
         documentTitle,
-        personName: submittedForm?.name?.trim() || "",
+        personName: form.name?.trim() || submittedForm?.name?.trim() || "",
         dateLine,
         coordsLine,
         pageTitle: pageTitleMap[activeTab] ?? activeTab,
