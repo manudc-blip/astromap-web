@@ -219,6 +219,7 @@ export async function svgTextToPngBlob(
 type InterpretationLivrableInput = {
   language: "fr" | "en";
   documentTitle: string;
+  personName?: string;
   dateLine: string;
   coordsLine: string;
   interpretationHtml: string;
@@ -604,6 +605,7 @@ export function openPrintDocument(html: string) {
 export function buildGraphicLivrableHtml(input: {
   language: "fr" | "en";
   documentTitle: string;
+  personName?: string;
   dateLine: string;
   coordsLine: string;
   pageTitle: string;
