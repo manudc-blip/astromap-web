@@ -1722,7 +1722,9 @@ const handleReset = () => {
       ]);
 
       const documentTitle =
-        language === "en" ? "Astrological chart" : "Thème astrologique";
+        form.name?.trim() ||
+        submittedForm?.name?.trim() ||
+        (language === "en" ? "Astrological chart" : "Thème astrologique");
 
       const dateLine = `${submittedForm?.day}/${submittedForm?.month}/${submittedForm?.year} – ${submittedForm?.hour}:${submittedForm?.minute} (${submittedForm?.timeRef}, ${submittedForm?.tz})`;
       const coordsLine = `${submittedForm?.latitude}, ${submittedForm?.longitude}`;
@@ -1730,7 +1732,7 @@ const handleReset = () => {
       const printableHtml = buildInterpretationLivrableHtml({
         language,
         documentTitle,
-        personName: form.name?.trim() || submittedForm?.name?.trim() || "",
+        personName: "",
         dateLine,
         coordsLine,
         interpretationHtml: interpretation,
@@ -1823,7 +1825,9 @@ if (!current || activeTab === "interpretation") {
       const svgMarkup = await inlineSvgImages(exportCurrent);
 
       const documentTitle =
-        language === "en" ? "Astrological chart" : "Thème astrologique";
+        form.name?.trim() ||
+        submittedForm?.name?.trim() ||
+        (language === "en" ? "Astrological chart" : "Thème astrologique");
 
       const dateLine = `${submittedForm?.day}/${submittedForm?.month}/${submittedForm?.year} – ${submittedForm?.hour}:${submittedForm?.minute} (${submittedForm?.timeRef}, ${submittedForm?.tz})`;
       const coordsLine = `${submittedForm?.latitude}, ${submittedForm?.longitude}`;
@@ -1839,7 +1843,7 @@ if (!current || activeTab === "interpretation") {
       const printableHtml = buildGraphicLivrableHtml({
         language,
         documentTitle,
-        personName: form.name?.trim() || submittedForm?.name?.trim() || "",
+        personName: "",
         dateLine,
         coordsLine,
         pageTitle: pageTitleMap[activeTab] ?? activeTab,
