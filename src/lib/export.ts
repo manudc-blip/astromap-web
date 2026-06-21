@@ -265,6 +265,7 @@ export function buildInterpretationLivrableHtml(
   const {
     language,
     documentTitle,
+    personName,
     dateLine,
     coordsLine,
     interpretationHtml,
@@ -542,6 +543,7 @@ export function buildInterpretationLivrableHtml(
 <body>
   <section class="pdf-page chart-page">
     <h1 class="cover-title">${escapeHtml(documentTitle)}</h1>
+    ${personName ? `<div class="meta-line">${escapeHtml(personName)}</div>` : ""}
     <div class="meta-line">${escapeHtml(dateLine)}</div>
     <div class="meta-line">${escapeHtml(coordsLine)}</div>
     <div class="chart-shell chart-shell-ecliptic">
