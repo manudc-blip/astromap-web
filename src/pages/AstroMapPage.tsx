@@ -1731,6 +1731,7 @@ const handleReset = () => {
       const printableHtml = buildInterpretationLivrableHtml({
         language,
         documentTitle,
+        personName: submittedForm?.name?.trim() || "",
         dateLine,
         coordsLine,
         interpretationHtml: interpretation,
@@ -1840,6 +1841,7 @@ if (!current || activeTab === "interpretation") {
       const printableHtml = buildGraphicLivrableHtml({
         language,
         documentTitle,
+        personName: submittedForm?.name?.trim() || "",
         dateLine,
         coordsLine,
         pageTitle: pageTitleMap[activeTab] ?? activeTab,
