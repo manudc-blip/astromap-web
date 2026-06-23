@@ -42,6 +42,7 @@ import {
   getSvgForExportTab,
   searchCities,
   type EclipticLayoutPayload,
+  getTransitsSvgForExport,
 } from "../lib/api";
 import {
   buildDnSubLabel,
