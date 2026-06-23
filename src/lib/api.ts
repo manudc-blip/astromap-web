@@ -58,6 +58,13 @@ function isCacheableApiCall(path: string, init?: RequestInit) {
   ].includes(path);
 }
 
+export async function getTransitsSvgForExport(payload: TransitsRequestPayload) {
+  return apiText("/transits/svg-publication", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
 function buildApiCacheKey(path: string, init?: RequestInit) {
   const method = (init?.method || "GET").toUpperCase();
   const body = typeof init?.body === "string" ? init.body : "";
