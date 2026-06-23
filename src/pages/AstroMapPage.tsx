@@ -39,6 +39,7 @@ import {
   getInterpretationHtml,
   getTransitsSvg,
   getEclipticLayout,
+  getSvgForExportTab,
   searchCities,
   type EclipticLayoutPayload,
 } from "../lib/api";
@@ -1775,22 +1776,19 @@ const handleReset = () => {
     setExportDialogOpen(true);
   };
 
-  const runGraphicExport = async () => {
-let current = cache[activeTab];
+const runGraphicExport = async () => {
+  let current = cache[activeTab];
 
-if (
-  activeTab === "ecliptic" &&
-  current === "__ECLIPTIC_LAYOUT_READY__" &&
-  submittedForm
-) {
-  const themeReq = buildThemeRequestPayload(submittedForm);
-  current = await getSvgForTab("ecliptic", themeReq);
-
-  setCache((prev) => ({
-    ...prev,
-    ecliptic: current,
-  }));
-}
+  if (
+    (activeTab === "ecliptic" || activeTab === "domitude") &&
+    submittedForm
+  ) {
+    const themeReq = buildThemeRequestPayload(submittedForm);
+    current = await getSvgForExportTab(
+      activeTab as Exclude<TabKey, "interpretation" | "transits">,
+      themeReq
+    );
+  }
 
 const exportCurrent = current ? stripSvgChartTitle(current) : "";
 
