@@ -48,6 +48,7 @@ function isCacheableApiCall(path: string, init?: RequestInit) {
     "/theme/svg",
     "/theme/ecliptic-layout",
     "/theme/domitude-svg",
+    "/theme/domitude-svg-publication",
     "/ret/svg",
     "/transits",
     "/transits/svg",
@@ -276,6 +277,23 @@ export async function getSvgForTab(tab: Exclude<TabKey, "interpretation" | "tran
   const pathByTab: Record<Exclude<TabKey, "interpretation" | "transits">, string> = {
     ecliptic: "/theme/svg",
     domitude: "/theme/domitude-svg",
+    ret: "/ret/svg",
+    aspects: "/aspects/svg",
+  };
+
+  return apiText(pathByTab[tab], {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function getSvgForExportTab(
+  tab: Exclude<TabKey, "interpretation" | "transits">,
+  payload: ThemeRequestPayload
+) {
+  const pathByTab: Record<Exclude<TabKey, "interpretation" | "transits">, string> = {
+    ecliptic: "/theme/svg",
+    domitude: "/theme/domitude-svg-publication",
     ret: "/ret/svg",
     aspects: "/aspects/svg",
   };
