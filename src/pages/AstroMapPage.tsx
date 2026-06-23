@@ -1588,6 +1588,9 @@ const handleReset = () => {
   setDnSelectedActive(false);
   setDnSuggestions([]);
   setShowDnSuggestions(false);
+  setCurrentThemeOwnerTitle("");
+  setDnBirthSnapshot(null);
+  setIdStateCache(null);
   setCoordsDisplayMode("DEC");
 
   immediateAutoCalcRef.current = true;
