@@ -1783,6 +1783,11 @@ const handleReset = () => {
 const runGraphicExport = async () => {
   let current = cache[activeTab];
 
+  if (activeTab === "transits" && submittedForm) {
+    const transitReq = buildTransitsRequestPayload(submittedForm);
+    current = await getTransitsSvgForExport(transitReq);
+  }
+
   if (
     (activeTab === "ecliptic" ||
       activeTab === "domitude" ||
@@ -1791,6 +1796,7 @@ const runGraphicExport = async () => {
     submittedForm
   ) {
     const themeReq = buildThemeRequestPayload(submittedForm);
+
     current = await getSvgForExportTab(
       activeTab as Exclude<TabKey, "interpretation" | "transits">,
       themeReq
