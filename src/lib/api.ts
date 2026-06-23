@@ -277,7 +277,7 @@ export async function getSvgForTab(tab: Exclude<TabKey, "interpretation" | "tran
   const pathByTab: Record<Exclude<TabKey, "interpretation" | "transits">, string> = {
     ecliptic: "/theme/svg",
     domitude: "/theme/domitude-svg",
-    ret: "/ret/svg",
+    ret: "/ret/svg-publication",
     aspects: "/aspects/svg",
   };
 
