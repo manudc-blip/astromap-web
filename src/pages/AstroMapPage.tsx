@@ -1780,7 +1780,10 @@ const runGraphicExport = async () => {
   let current = cache[activeTab];
 
   if (
-    (activeTab === "ecliptic" || activeTab === "domitude") &&
+    (activeTab === "ecliptic" ||
+      activeTab === "domitude" ||
+      activeTab === "ret" ||
+      activeTab === "aspects") &&
     submittedForm
   ) {
     const themeReq = buildThemeRequestPayload(submittedForm);
