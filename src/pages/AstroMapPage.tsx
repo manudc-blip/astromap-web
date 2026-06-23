@@ -1813,15 +1813,18 @@ if (!current || activeTab === "interpretation") {
     try {
       setExportBusy(true);
 
-      if (exportKind === "svg") {
-        downloadTextFile(
-          `astromap-${activeTab}.svg`,
-          exportCurrent,
-          "image/svg+xml;charset=utf-8"
-        );
-        setExportDialogOpen(false);
-        return;
-      }
+    if (exportKind === "svg") {
+      const svgMarkup = await inlineSvgImages(exportCurrent);
+
+      downloadTextFile(
+        `astromap-${activeTab}.svg`,
+        svgMarkup,
+        "image/svg+xml;charset=utf-8"
+      );
+
+      setExportDialogOpen(false);
+      return;
+    }
 
       if (exportKind === "json") {
         downloadTextFile(
