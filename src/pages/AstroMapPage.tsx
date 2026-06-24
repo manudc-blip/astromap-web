@@ -1721,7 +1721,7 @@ const handleReset = () => {
       }
 
       const [eclipticSvg, retSvg, aspectsSvg] = await Promise.all([
-        inlineSvgImages(cropSvgViewBox(stripSvgChartTitle(ecliptic))),
+        inlineSvgImages(stripSvgChartTitle(ecliptic)),
         inlineSvgImages(cropSvgViewBox(stripSvgChartTitle(ret))),
         inlineSvgImages(cropSvgViewBox(stripSvgChartTitle(aspects))),
       ]);
