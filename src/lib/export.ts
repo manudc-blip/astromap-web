@@ -383,7 +383,7 @@ export function buildInterpretationLivrableHtml(
     .chart-shell-ecliptic line,
     .chart-shell-ecliptic path,
     .chart-shell-ecliptic circle {
-      stroke-width: 3px !important;
+      stroke-width: 2.5px !important;
     }
 
     .chart-shell-ret > svg,
