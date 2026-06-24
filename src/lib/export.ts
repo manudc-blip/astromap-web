@@ -42,6 +42,7 @@ export function stripSvgChartTitle(svgText: string): string {
     "Transit chart",
     "Aspects planétaires",
     "Planetary aspects",
+    "© 2025 GéoAstro",
   ];
 
   Array.from(svg.querySelectorAll("text")).forEach((node) => {
