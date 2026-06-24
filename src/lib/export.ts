@@ -331,8 +331,8 @@ export function buildInterpretationLivrableHtml(
     }
 
     .pdf-page {
-      width: 200mm;
-      height: 287mm;
+      width: 210mm;
+      height: 297mm;
       margin: 0 auto;
       box-sizing: border-box;
       display: flex;
@@ -340,7 +340,9 @@ export function buildInterpretationLivrableHtml(
       align-items: center;
       justify-content: flex-start;
       overflow: hidden;
-      padding: 0;
+      padding: 32mm 28mm 34mm 28mm;
+      break-after: page;
+      page-break-after: always;
     }
 
     .pdf-page:last-child {
@@ -443,7 +445,7 @@ export function buildInterpretationLivrableHtml(
       min-height: 297mm;
       margin: 0 auto;
       box-sizing: border-box;
-      padding: 26mm 32mm 30mm 32mm !important;
+      padding: 34mm 28mm 36mm 28mm !important;
       break-before: page;
       page-break-before: always;
       break-after: page;
@@ -695,9 +697,7 @@ export function buildGraphicLivrableHtml(input: {
       align-items: center;
       justify-content: flex-start;
       overflow: hidden;
-      padding: 24mm 28mm 28mm 28mm;
-      break-after: page;
-      page-break-after: always;
+      padding: 0;
     }
 
     .page-title {
@@ -708,7 +708,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .chart-shell {
       width: 200mm;
-      flex: 1;
+      flex: 0 0 auto;
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -737,7 +737,7 @@ export function buildGraphicLivrableHtml(input: {
       font-size: 8.5pt;
       color: #6b7280;
       margin-top: 6mm;
-      padding-top: 0;
+      padding-bottom: 0;
       flex: 0 0 auto;
     }
 
