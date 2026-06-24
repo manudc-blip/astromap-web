@@ -580,7 +580,7 @@ export function buildInterpretationLivrableHtml(
   </style>
 </head>
 <body>
-  <section class="interpretation-block force-page-start">
+  <section class="pdf-page chart-page">
     <h1 class="cover-title">${escapeHtml(documentTitle)}</h1>
     ${personName ? `<div class="meta-line">${escapeHtml(personName)}</div>` : ""}
     <div class="meta-line">${escapeHtml(dateLine)}</div>
@@ -613,7 +613,6 @@ export function buildInterpretationLivrableHtml(
     </div>
     <div class="page-footer">${escapeHtml(footer)}</div>
   </section>
-
   <script>
     window.addEventListener("load", () => {
       setTimeout(() => {
