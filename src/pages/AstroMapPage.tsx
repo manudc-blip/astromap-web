@@ -1825,7 +1825,7 @@ if (!current || activeTab === "interpretation") {
         return;
       }
 
-      const svgMarkup = await inlineSvgImages(cropSvgViewBox(exportCurrent, 12));
+      const svgMarkup = await inlineSvgImages(exportCurrent);
 
       const documentTitle =
         form.name?.trim() ||
