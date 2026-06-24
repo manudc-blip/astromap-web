@@ -718,7 +718,7 @@ export function buildGraphicLivrableHtml(input: {
       font-size: 8.5pt;
       color: #6b7280;
       margin-top: auto;
-      padding-bottom: 10mm;
+      padding-bottom: 22mm;
       flex: 0 0 auto;
     }
 
