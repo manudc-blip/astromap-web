@@ -65,7 +65,7 @@ export function addSvgFooter(svgText: string): string {
 
   const text = doc.createElementNS("http://www.w3.org/2000/svg", "text");
   text.setAttribute("x", String(width / 2));
-  text.setAttribute("y", String(height - 22));
+  text.setAttribute("y", String(height - 70));
   text.setAttribute("font-family", "Segoe UI, Arial, sans-serif");
   text.setAttribute("font-size", "13");
   text.setAttribute("fill", "#6b7280");
@@ -331,8 +331,16 @@ export function buildInterpretationLivrableHtml(
     }
 
     .pdf-page {
-      break-after: page;
-      page-break-after: always;
+      width: 200mm;
+      height: 287mm;
+      margin: 0 auto;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      padding: 0;
     }
 
     .pdf-page:last-child {
@@ -375,11 +383,15 @@ export function buildInterpretationLivrableHtml(
     }
 
     .chart-shell {
-      flex: 1;
+      width: 200mm;
+      flex: 1 1 auto;
+      min-height: 0;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      margin-top: 2mm;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
     }
 
     .chart-shell > svg {
@@ -664,7 +676,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .pdf-page {
       width: 200mm;
-      height: 287mm;
+      height: 287m;
       margin: 0 auto;
       box-sizing: border-box;
       display: flex;
@@ -677,14 +689,12 @@ export function buildGraphicLivrableHtml(input: {
 
     .chart-shell {
       width: 200mm;
-      flex: 1 1 auto;
-      min-height: 0;
+      flex: 1;
       display: flex;
       align-items: flex-start;
       justify-content: center;
       padding: 0;
       margin: 0;
-      overflow: hidden;
     }
 
     .chart-shell > svg,
@@ -708,7 +718,7 @@ export function buildGraphicLivrableHtml(input: {
       font-size: 8.5pt;
       color: #6b7280;
       margin-top: auto;
-      padding-bottom: 18mm;
+      padding-bottom: 10mm;
       flex: 0 0 auto;
     }
 
@@ -724,7 +734,6 @@ export function buildGraphicLivrableHtml(input: {
         margin: 0 auto;
         background: #ffffff;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-        flex-direction: column;
       }
     }
   </style>
