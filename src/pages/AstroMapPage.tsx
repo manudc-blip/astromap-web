@@ -1645,7 +1645,7 @@ const handleReset = () => {
     const eclipticPromise =
       cache.ecliptic && cache.ecliptic !== "__ECLIPTIC_LAYOUT_READY__"
         ? Promise.resolve(cache.ecliptic)
-        : getSvgForTab("ecliptic", themeReq);
+        : getSvgForExportTab("ecliptic", themeReq);
 
     const retPromise = cache.ret
       ? Promise.resolve(cache.ret)
