@@ -433,6 +433,11 @@ export function buildInterpretationLivrableHtml(
       padding-top: 8mm;
     }
 
+    .force-page-start {
+      break-before: page;
+      page-break-before: always;
+    }
+
     .interpretation-block {
       break-after: page;
       page-break-after: always;
@@ -594,14 +599,14 @@ export function buildInterpretationLivrableHtml(
     <div class="page-footer">${escapeHtml(footer)}</div>
   </section>
 
-  <section class="interpretation-block">
+  <section class="interpretation-block force-page-start">
     <div class="interpretation-wrap">
       ${bodyHtml}
     </div>
     <div class="page-footer">${escapeHtml(footer)}</div>
   </section>
 
-  <section class="pdf-page chart-page">
+  <section class="pdf-page chart-page force-page-start">
     <h2 class="page-title">${escapeHtml(aspectsTitle)}</h2>
     <div class="chart-shell chart-shell-aspects">
       ${aspectsSvg}
