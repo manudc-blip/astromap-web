@@ -375,8 +375,9 @@ export function buildInterpretationLivrableHtml(
     }
 
     .chart-shell-ecliptic > svg {
-      transform: scale(1.18);
-      transform-origin: center top;
+      width: 100%;
+      height: auto;
+      max-height: 230mm;
     }
 
     .chart-shell-ret > svg,
