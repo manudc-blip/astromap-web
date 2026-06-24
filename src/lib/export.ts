@@ -414,14 +414,20 @@ export function buildInterpretationLivrableHtml(
 
     .chart-shell-ret > svg,
     .chart-shell-ret svg {
-      transform: translateX(22mm) scale(1.38);
+      transform: translateX(22mm) scale(1.30);
       transform-origin: center top;
+    }
+
+    .chart-shell-aspects {
+      align-items: flex-start;
+      justify-content: center;
     }
 
     .chart-shell-aspects > svg,
     .chart-shell-aspects svg {
-      transform: scale(1.55);
+      transform: translateX(0) scale(1.25);
       transform-origin: center top;
+      max-width: 100%;
     }
 
     .page-footer {
@@ -694,6 +700,12 @@ export function buildGraphicLivrableHtml(input: {
       page-break-after: always;
     }
 
+    .page-title {
+      font-size: 17pt;
+      margin-top: 8mm;
+      margin-bottom: 10mm;
+    }
+
     .chart-shell {
       width: 200mm;
       flex: 1;
@@ -716,7 +728,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .chart-shell-ecliptic > svg,
     .chart-shell-ecliptic svg {
-      transform: translateX(-12mm);
+      transform: translateX(-18mm) scale(1.25);
       transform-origin: center top;
     }
 
