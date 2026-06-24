@@ -54,6 +54,28 @@ export function stripSvgChartTitle(svgText: string): string {
   return ensureSvgNamespaces(new XMLSerializer().serializeToString(svg));
 }
 
+export function addSvgFooter(svgText: string): string {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(svgText, "image/svg+xml");
+  const svg = doc.documentElement;
+
+  const width = Number(svg.getAttribute("width")) || 1200;
+  const height = Number(svg.getAttribute("height")) || 900;
+  const footer = "© 2025 GéoAstro – AstroMap v1.0";
+
+  const text = doc.createElementNS("http://www.w3.org/2000/svg", "text");
+  text.setAttribute("x", String(width / 2));
+  text.setAttribute("y", String(height - 22));
+  text.setAttribute("font-family", "Segoe UI, Arial, sans-serif");
+  text.setAttribute("font-size", "13");
+  text.setAttribute("fill", "#6b7280");
+  text.setAttribute("text-anchor", "middle");
+  text.textContent = footer;
+
+  svg.appendChild(text);
+
+  return ensureSvgNamespaces(new XMLSerializer().serializeToString(svg));
+}
 
 export function cropSvgViewBox(svgText: string, padding = 24): string {
   const parser = new DOMParser();
@@ -686,7 +708,7 @@ export function buildGraphicLivrableHtml(input: {
       font-size: 8.5pt;
       color: #6b7280;
       margin-top: auto;
-      padding-bottom: 3mm;
+      padding-bottom: 18mm;
       flex: 0 0 auto;
     }
 
