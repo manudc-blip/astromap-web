@@ -443,7 +443,7 @@ export function buildInterpretationLivrableHtml(
       min-height: 297mm;
       margin: 0 auto;
       box-sizing: border-box;
-      padding: 18mm 28mm 22mm 28mm !important;
+      padding: 26mm 32mm 30mm 32mm !important;
       break-before: page;
       page-break-before: always;
       break-after: page;
@@ -570,7 +570,7 @@ export function buildInterpretationLivrableHtml(
         margin: 0 auto 16px auto;
         background: white;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-        padding: 18mm 8mm !important;
+        padding: 24mm 8mm 28mm 8mm !important;
         box-sizing: border-box;
       }
 
@@ -579,7 +579,7 @@ export function buildInterpretationLivrableHtml(
         margin: 0 auto 16px auto;
         background: white;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-        padding: 18mm 24mm 26mm 24mm !important;
+        padding: 26mm 32mm 30mm 32mm !important;
         box-sizing: border-box;
       }
     }
@@ -695,7 +695,7 @@ export function buildGraphicLivrableHtml(input: {
       align-items: center;
       justify-content: flex-start;
       overflow: hidden;
-      padding: 18mm 28mm 22mm 28mm;
+      padding: 24mm 28mm 28mm 28mm;
       break-after: page;
       page-break-after: always;
     }
@@ -736,8 +736,8 @@ export function buildGraphicLivrableHtml(input: {
       text-align: center;
       font-size: 8.5pt;
       color: #6b7280;
-      margin-top: auto;
-      padding-bottom: 10mm;
+      margin-top: 6mm;
+      padding-top: 0;
       flex: 0 0 auto;
     }
 
