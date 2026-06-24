@@ -676,32 +676,25 @@ export function buildGraphicLivrableHtml(input: {
 
     .pdf-page {
       width: 200mm;
-      height: 287mm;
       margin: 0 auto;
       box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      overflow: hidden;
       padding: 0;
+      text-align: center;
     }
 
     .chart-shell {
       width: 200mm;
-      height: 220mm;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
+      display: block;
       padding: 0;
-      margin: 0;
+      margin: 0 auto;
+      text-align: center;
     }
 
     .chart-shell > svg,
     .chart-shell svg {
       display: block;
       width: auto;
-      height: 210mm;
+      height: auto;
       max-width: 200mm;
       max-height: 210mm;
       margin: 0 auto;
@@ -717,8 +710,7 @@ export function buildGraphicLivrableHtml(input: {
       text-align: center;
       font-size: 8.5pt;
       color: #6b7280;
-      padding-top: 6mm;
-      flex: 0 0 auto;
+      margin-top: 2mm;
     }
 
     @media screen {
@@ -729,7 +721,7 @@ export function buildGraphicLivrableHtml(input: {
 
       .pdf-page {
         width: 210mm;
-        min-height: 297mm;
+        min-height: auto;
         margin: 0 auto;
         background: #ffffff;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
