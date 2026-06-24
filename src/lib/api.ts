@@ -305,7 +305,7 @@ export async function getSvgForExportTab(
     ecliptic: "/theme/svg",
     domitude: "/theme/domitude-svg-publication",
     ret: "/ret/svg-publication",
-    aspects: "/aspects/svg",
+    aspects: "/aspects/svg-publication",
   };
 
   return apiText(pathByTab[tab], {
