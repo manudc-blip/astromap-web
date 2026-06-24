@@ -1588,6 +1588,7 @@ const handleReset = () => {
   setDnSuggestions([]);
   setShowDnSuggestions(false);
   setCoordsDisplayMode("DEC");
+  setCurrentThemeOwnerTitle("");
 
   immediateAutoCalcRef.current = true;
   runQueuedAutoCompute(resetForm);
