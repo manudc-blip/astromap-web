@@ -48,23 +48,12 @@ function isCacheableApiCall(path: string, init?: RequestInit) {
     "/theme/svg",
     "/theme/ecliptic-layout",
     "/theme/domitude-svg",
-    "/theme/domitude-svg-publication",
     "/ret/svg",
-    "/ret/svg-publication",
     "/transits",
     "/transits/svg",
-    "/transits/svg-publication",
     "/aspects/svg",
-    "/aspects/svg-publication",
     "/interpretation/html",
   ].includes(path);
-}
-
-export async function getTransitsSvgForExport(payload: TransitsRequestPayload) {
-  return apiText("/transits/svg-publication", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
 }
 
 function buildApiCacheKey(path: string, init?: RequestInit) {
@@ -289,23 +278,6 @@ export async function getSvgForTab(tab: Exclude<TabKey, "interpretation" | "tran
     domitude: "/theme/domitude-svg",
     ret: "/ret/svg",
     aspects: "/aspects/svg",
-  };
-
-  return apiText(pathByTab[tab], {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
-}
-
-export async function getSvgForExportTab(
-  tab: Exclude<TabKey, "interpretation" | "transits">,
-  payload: ThemeRequestPayload
-) {
-  const pathByTab: Record<Exclude<TabKey, "interpretation" | "transits">, string> = {
-    ecliptic: "/theme/svg",
-    domitude: "/theme/domitude-svg-publication",
-    ret: "/ret/svg-publication",
-    aspects: "/aspects/svg-publication",
   };
 
   return apiText(pathByTab[tab], {
