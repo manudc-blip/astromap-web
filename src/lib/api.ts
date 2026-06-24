@@ -288,7 +288,7 @@ export async function getSvgForTab(tab: Exclude<TabKey, "interpretation" | "tran
     ecliptic: "/theme/svg",
     domitude: "/theme/domitude-svg",
     ret: "/ret/svg",
-    aspects: "/aspects/svg-publication",
+    aspects: "/aspects/svg",
   };
 
   return apiText(pathByTab[tab], {
