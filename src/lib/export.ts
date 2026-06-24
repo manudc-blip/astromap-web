@@ -676,7 +676,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .pdf-page {
       width: 200mm;
-      height: 287m;
+      height: 287mm;
       margin: 0 auto;
       box-sizing: border-box;
       display: flex;
@@ -689,7 +689,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .chart-shell {
       width: 200mm;
-      flex: 1;
+      height: 245mm;
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -717,8 +717,7 @@ export function buildGraphicLivrableHtml(input: {
       text-align: center;
       font-size: 8.5pt;
       color: #6b7280;
-      margin-top: auto;
-      padding-bottom: 30mm;
+      padding-top: 6mm;
       flex: 0 0 auto;
     }
 
