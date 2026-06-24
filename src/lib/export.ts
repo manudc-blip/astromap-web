@@ -689,7 +689,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .chart-shell {
       width: 200mm;
-      height: 245mm;
+      height: 210mm;
       display: flex;
       align-items: flex-start;
       justify-content: center;
