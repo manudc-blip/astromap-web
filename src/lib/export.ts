@@ -613,6 +613,8 @@ export function buildGraphicLivrableHtml(input: {
   pageTitle: string;
   svgMarkup: string;
 }) {
+  const footer = "© 2025 GéoAstro – AstroMap v1.0";
+
   return `<!doctype html>
 <html lang="${input.language}">
 <head>
@@ -644,15 +646,16 @@ export function buildGraphicLivrableHtml(input: {
       margin: 0 auto;
       box-sizing: border-box;
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       overflow: hidden;
       padding: 0;
     }
 
     .chart-shell {
       width: 200mm;
-      height: 287mm;
+      flex: 1;
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -666,7 +669,7 @@ export function buildGraphicLivrableHtml(input: {
       width: auto;
       height: auto;
       max-width: 200mm;
-      max-height: 287mm;
+      max-height: 278mm;
       margin: 0 auto;
     }
 
@@ -674,6 +677,14 @@ export function buildGraphicLivrableHtml(input: {
     .chart-shell-ecliptic svg {
       transform: translateX(-12mm);
       transform-origin: center top;
+    }
+
+    .page-footer {
+      text-align: center;
+      font-size: 8.5pt;
+      color: #6b7280;
+      margin-top: auto;
+      padding-bottom: 3mm;
     }
 
     @media screen {
@@ -697,6 +708,7 @@ export function buildGraphicLivrableHtml(input: {
     <div class="chart-shell ${input.pageTitle === "Thème écliptique" || input.pageTitle === "Ecliptic chart" ? "chart-shell-ecliptic" : ""}">
       ${input.svgMarkup}
     </div>
+    <div class="page-footer">${escapeHtml(footer)}</div>
   </section>
 
   <script>
