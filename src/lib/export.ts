@@ -654,7 +654,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .pdf-page {
       width: 200mm;
-      min-height: 287mm;
+      height: 287m
       margin: 0 auto;
       box-sizing: border-box;
       display: flex;
@@ -681,7 +681,7 @@ export function buildGraphicLivrableHtml(input: {
       width: auto;
       height: auto;
       max-width: 200mm;
-      max-height: 278mm;
+      max-height: 260mm;
       margin: 0 auto;
     }
 
@@ -697,6 +697,7 @@ export function buildGraphicLivrableHtml(input: {
       color: #6b7280;
       margin-top: auto;
       padding-bottom: 3mm;
+      flex: 0 0 auto;
     }
 
     @media screen {
@@ -710,7 +711,6 @@ export function buildGraphicLivrableHtml(input: {
         min-height: 297mm;
         margin: 0 auto;
         background: #ffffff;
-        flex-direction: column;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
       }
     }
