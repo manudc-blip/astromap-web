@@ -361,21 +361,20 @@ export function buildInterpretationLivrableHtml(
     }
 
     .chart-shell > svg {
-      width: 132%;
+      width: 100%;
       height: auto;
-      max-height: 248mm;
+      max-height: 235mm;
       display: block;
-      transform: scale(1.38);
       transform-origin: center top;
     }
 
     .chart-shell svg {
-      max-width: 132%;
+      max-width: 100%;
     }
 
     .chart-shell-ecliptic > svg,
     .chart-shell-ecliptic svg {
-      transform: translateX(-18mm) scale(1.38);
+      transform: scale(1.05);
       transform-origin: center top;
     }
 
