@@ -698,11 +698,12 @@ export function buildGraphicLivrableHtml(input: {
       max-width: 200mm;
       max-height: 210mm;
       margin: 0 auto;
+      transform: translateY(-35mm);
     }
 
     .chart-shell-ecliptic > svg,
     .chart-shell-ecliptic svg {
-      transform: translateX(-12mm);
+      transform: translateX(-12mm) translateY(-35mm);
       transform-origin: center top;
     }
 
