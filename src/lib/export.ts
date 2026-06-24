@@ -314,7 +314,7 @@ export function buildInterpretationLivrableHtml(
   <style>
     @page {
       size: A4;
-      margin: 0;
+      margin: 18mm 28mm 28mm 28mm;
     }
 
     html, body {
@@ -331,8 +331,8 @@ export function buildInterpretationLivrableHtml(
     }
 
     .pdf-page {
-      width: 210mm;
-      height: 297mm;
+      width: 200mm;
+      height: 287mm;
       margin: 0 auto;
       box-sizing: border-box;
       display: flex;
@@ -340,9 +340,7 @@ export function buildInterpretationLivrableHtml(
       align-items: center;
       justify-content: flex-start;
       overflow: hidden;
-      padding: 32mm 28mm 34mm 28mm;
-      break-after: page;
-      page-break-after: always;
+      padding: 0;
     }
 
     .pdf-page:last-child {
@@ -351,6 +349,7 @@ export function buildInterpretationLivrableHtml(
     }
 
     .chart-page {
+      min-height: 261mm;
       display: flex;
       flex-direction: column;
     }
@@ -384,7 +383,7 @@ export function buildInterpretationLivrableHtml(
     }
 
     .chart-shell {
-      width: 100%;
+      width: 200mm;
       flex: 1 1 auto;
       min-height: 0;
       display: flex;
@@ -416,20 +415,14 @@ export function buildInterpretationLivrableHtml(
 
     .chart-shell-ret > svg,
     .chart-shell-ret svg {
-      transform: translateX(22mm) scale(1.30);
+      transform: translateX(22mm) scale(1.38);
       transform-origin: center top;
-    }
-
-    .chart-shell-aspects {
-      align-items: flex-start;
-      justify-content: center;
     }
 
     .chart-shell-aspects > svg,
     .chart-shell-aspects svg {
-      transform: translateX(0) scale(1.25);
+      transform: scale(1.55);
       transform-origin: center top;
-      max-width: 100%;
     }
 
     .page-footer {
@@ -441,15 +434,9 @@ export function buildInterpretationLivrableHtml(
     }
 
     .interpretation-block {
-      width: 210mm;
-      min-height: 297mm;
-      margin: 0 auto;
-      box-sizing: border-box;
-      padding: 34mm 28mm 36mm 28mm !important;
-      break-before: page;
-      page-break-before: always;
       break-after: page;
       page-break-after: always;
+      padding-bottom: 22mm !important;
     }
 
     .interpretation-wrap {
@@ -572,7 +559,7 @@ export function buildInterpretationLivrableHtml(
         margin: 0 auto 16px auto;
         background: white;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-        padding: 32mm 28mm 34mm 28mm !important;
+        padding: 18mm 8mm !important;
         box-sizing: border-box;
       }
 
@@ -581,7 +568,7 @@ export function buildInterpretationLivrableHtml(
         margin: 0 auto 16px auto;
         background: white;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-        padding: 34mm 28mm 36mm 28mm !important;
+        padding: 18mm 24mm 26mm 24mm !important;
         box-sizing: border-box;
       }
     }
@@ -688,8 +675,8 @@ export function buildGraphicLivrableHtml(input: {
     }
 
     .pdf-page {
-      width: 210mm;
-      height: 297mm;
+      width: 200mm;
+      height: 287m;
       margin: 0 auto;
       box-sizing: border-box;
       display: flex;
@@ -700,15 +687,9 @@ export function buildGraphicLivrableHtml(input: {
       padding: 0;
     }
 
-    .page-title {
-      font-size: 17pt;
-      margin-top: 8mm;
-      margin-bottom: 10mm;
-    }
-
     .chart-shell {
       width: 200mm;
-      flex: 0 0 auto;
+      flex: 1;
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -728,7 +709,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .chart-shell-ecliptic > svg,
     .chart-shell-ecliptic svg {
-      transform: translateX(-18mm) scale(1.25);
+      transform: translateX(-12mm);
       transform-origin: center top;
     }
 
@@ -736,8 +717,8 @@ export function buildGraphicLivrableHtml(input: {
       text-align: center;
       font-size: 8.5pt;
       color: #6b7280;
-      margin-top: 6mm;
-      padding-bottom: 0;
+      margin-top: auto;
+      padding-bottom: 10mm;
       flex: 0 0 auto;
     }
 
