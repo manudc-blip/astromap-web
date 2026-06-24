@@ -370,13 +370,12 @@ export function buildInterpretationLivrableHtml(
       transform-origin: center top;
     }
 
-    .chart-shell svg {
+    .chart-shell > svg {
       max-width: 132%;
     }
 
-    .chart-shell-ecliptic > svg,
-    .chart-shell-ecliptic svg {
-      transform: scale(1.38);
+    .chart-shell-ecliptic > svg {
+      transform: scale(1.18);
       transform-origin: center top;
     }
 
