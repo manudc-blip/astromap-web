@@ -380,6 +380,12 @@ export function buildInterpretationLivrableHtml(
       margin: 0 auto;
     }
 
+    .chart-shell-ecliptic line,
+    .chart-shell-ecliptic path,
+    .chart-shell-ecliptic circle {
+      stroke-width: 1.2px !important;
+    }
+
     .chart-shell-ret > svg,
     .chart-shell-ret svg {
       transform: translateX(22mm) scale(1.38);
