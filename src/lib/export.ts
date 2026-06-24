@@ -314,7 +314,7 @@ export function buildInterpretationLivrableHtml(
   <style>
     @page {
       size: A4;
-      margin: 18mm 28mm 28mm 28mm;
+      margin: 0;
     }
 
     html, body {
@@ -349,7 +349,6 @@ export function buildInterpretationLivrableHtml(
     }
 
     .chart-page {
-      min-height: 261mm;
       display: flex;
       flex-direction: column;
     }
@@ -383,7 +382,7 @@ export function buildInterpretationLivrableHtml(
     }
 
     .chart-shell {
-      width: 200mm;
+      width: 100%;
       flex: 1 1 auto;
       min-height: 0;
       display: flex;
@@ -434,9 +433,15 @@ export function buildInterpretationLivrableHtml(
     }
 
     .interpretation-block {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      box-sizing: border-box;
+      padding: 18mm 28mm 22mm 28mm !important;
+      break-before: page;
+      page-break-before: always;
       break-after: page;
       page-break-after: always;
-      padding-bottom: 22mm !important;
     }
 
     .interpretation-wrap {
@@ -675,8 +680,8 @@ export function buildGraphicLivrableHtml(input: {
     }
 
     .pdf-page {
-      width: 200mm;
-      height: 287m;
+      width: 210mm;
+      height: 297mm;
       margin: 0 auto;
       box-sizing: border-box;
       display: flex;
@@ -684,7 +689,9 @@ export function buildGraphicLivrableHtml(input: {
       align-items: center;
       justify-content: flex-start;
       overflow: hidden;
-      padding: 0;
+      padding: 18mm 28mm 22mm 28mm;
+      break-after: page;
+      page-break-after: always;
     }
 
     .chart-shell {
