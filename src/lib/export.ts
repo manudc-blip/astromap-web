@@ -65,7 +65,7 @@ export function addSvgFooter(svgText: string): string {
 
   const text = doc.createElementNS("http://www.w3.org/2000/svg", "text");
   text.setAttribute("x", String(width / 2));
-  text.setAttribute("y", String(height - 22));
+  text.setAttribute("y", String(height - 70));
   text.setAttribute("font-family", "Segoe UI, Arial, sans-serif");
   text.setAttribute("font-size", "13");
   text.setAttribute("fill", "#6b7280");
@@ -676,7 +676,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .pdf-page {
       width: 200mm;
-      height: 287m
+      height: 287m;
       margin: 0 auto;
       box-sizing: border-box;
       display: flex;
