@@ -55,6 +55,7 @@ function isCacheableApiCall(path: string, init?: RequestInit) {
     "/transits/svg",
     "/transits/svg-publication",
     "/aspects/svg",
+    "/aspects/svg-publication",
     "/interpretation/html",
   ].includes(path);
 }
