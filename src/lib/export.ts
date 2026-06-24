@@ -54,28 +54,6 @@ export function stripSvgChartTitle(svgText: string): string {
   return ensureSvgNamespaces(new XMLSerializer().serializeToString(svg));
 }
 
-export function addSvgFooter(svgText: string): string {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(svgText, "image/svg+xml");
-  const svg = doc.documentElement;
-
-  const width = Number(svg.getAttribute("width")) || 1200;
-  const height = Number(svg.getAttribute("height")) || 900;
-  const footer = "© 2025 GéoAstro – AstroMap v1.0";
-
-  const text = doc.createElementNS("http://www.w3.org/2000/svg", "text");
-  text.setAttribute("x", String(width / 2));
-  text.setAttribute("y", String(height - 70));
-  text.setAttribute("font-family", "Segoe UI, Arial, sans-serif");
-  text.setAttribute("font-size", "13");
-  text.setAttribute("fill", "#6b7280");
-  text.setAttribute("text-anchor", "middle");
-  text.textContent = footer;
-
-  svg.appendChild(text);
-
-  return ensureSvgNamespaces(new XMLSerializer().serializeToString(svg));
-}
 
 export function cropSvgViewBox(svgText: string, padding = 24): string {
   const parser = new DOMParser();
@@ -331,16 +309,8 @@ export function buildInterpretationLivrableHtml(
     }
 
     .pdf-page {
-      width: 200mm;
-      height: 287mm;
-      margin: 0 auto;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      overflow: hidden;
-      padding: 0;
+      break-after: page;
+      page-break-after: always;
     }
 
     .pdf-page:last-child {
@@ -383,15 +353,11 @@ export function buildInterpretationLivrableHtml(
     }
 
     .chart-shell {
-      width: 200mm;
-      flex: 1 1 auto;
-      min-height: 0;
+      flex: 1;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 0;
-      margin: 0;
-      overflow: hidden;
+      margin-top: 2mm;
     }
 
     .chart-shell > svg {
@@ -676,18 +642,27 @@ export function buildGraphicLivrableHtml(input: {
 
     .pdf-page {
       width: 200mm;
+      height: 287mm;
       margin: 0 auto;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
       padding: 0;
-      text-align: center;
     }
 
     .chart-shell {
       width: 200mm;
-      display: block;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
       padding: 0;
-      margin: 0 auto;
-      text-align: center;
+      margin: 0;
+      overflow: hidden;
     }
 
     .chart-shell > svg,
@@ -696,14 +671,13 @@ export function buildGraphicLivrableHtml(input: {
       width: auto;
       height: auto;
       max-width: 200mm;
-      max-height: 210mm;
+      max-height: 260mm;
       margin: 0 auto;
-      transform: translateY(-35mm);
     }
 
     .chart-shell-ecliptic > svg,
     .chart-shell-ecliptic svg {
-      transform: translateX(-12mm) translateY(-35mm);
+      transform: translateX(-12mm);
       transform-origin: center top;
     }
 
@@ -711,7 +685,9 @@ export function buildGraphicLivrableHtml(input: {
       text-align: center;
       font-size: 8.5pt;
       color: #6b7280;
-      margin-top: 2mm;
+      margin-top: auto;
+      padding-bottom: 3mm;
+      flex: 0 0 auto;
     }
 
     @media screen {
@@ -722,10 +698,11 @@ export function buildGraphicLivrableHtml(input: {
 
       .pdf-page {
         width: 210mm;
-        min-height: auto;
+        min-height: 297mm;
         margin: 0 auto;
         background: #ffffff;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        flex-direction: column;
       }
     }
   </style>
