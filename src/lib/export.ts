@@ -689,7 +689,7 @@ export function buildGraphicLivrableHtml(input: {
 
     .chart-shell {
       width: 200mm;
-      height: 210mm;
+      height: 220mm;
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -701,9 +701,9 @@ export function buildGraphicLivrableHtml(input: {
     .chart-shell svg {
       display: block;
       width: auto;
-      height: auto;
+      height: 210mm;
       max-width: 200mm;
-      max-height: 260mm;
+      max-height: 210mm;
       margin: 0 auto;
     }
 
