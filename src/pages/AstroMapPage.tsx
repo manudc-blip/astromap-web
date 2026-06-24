@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import {
+  addSvgFooter,
   buildGraphicLivrableHtml,
   buildInterpretationLivrableHtml,
   cropSvgViewBox,
@@ -1793,7 +1794,7 @@ if (
   }));
 }
 
-const exportCurrent = current ? stripSvgChartTitle(current) : "";
+const exportCurrent = current ? addSvgFooter(stripSvgChartTitle(current)) : "";
 
 if (!current || activeTab === "interpretation") {
   setExportDialogOpen(false);
