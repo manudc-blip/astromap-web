@@ -309,8 +309,16 @@ export function buildInterpretationLivrableHtml(
     }
 
     .pdf-page {
-      break-after: page;
-      page-break-after: always;
+      width: 200mm;
+      height: 287mm;
+      margin: 0 auto;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      padding: 0;
     }
 
     .pdf-page:last-child {
@@ -353,11 +361,15 @@ export function buildInterpretationLivrableHtml(
     }
 
     .chart-shell {
-      flex: 1;
+      width: 200mm;
+      flex: 1 1 auto;
+      min-height: 0;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      margin-top: 2mm;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
     }
 
     .chart-shell > svg {
@@ -698,6 +710,7 @@ export function buildGraphicLivrableHtml(input: {
         min-height: 297mm;
         margin: 0 auto;
         background: #ffffff;
+        flex-direction: column;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
       }
     }
@@ -708,7 +721,7 @@ export function buildGraphicLivrableHtml(input: {
     <div class="chart-shell ${input.pageTitle === "Thème écliptique" || input.pageTitle === "Ecliptic chart" ? "chart-shell-ecliptic" : ""}">
       ${input.svgMarkup}
     </div>
-    <div class="page-footer">${escapeHtml(footer)}</div>
+    <div class="page-footer">© 2025 GéoAstro – AstroMap v1.0</div>
   </section>
 
   <script>
