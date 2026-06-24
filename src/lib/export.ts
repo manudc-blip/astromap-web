@@ -580,7 +580,7 @@ export function buildInterpretationLivrableHtml(
   </style>
 </head>
 <body>
-  <section class="pdf-page chart-page">
+  <section class="interpretation-block force-page-start">
     <h1 class="cover-title">${escapeHtml(documentTitle)}</h1>
     ${personName ? `<div class="meta-line">${escapeHtml(personName)}</div>` : ""}
     <div class="meta-line">${escapeHtml(dateLine)}</div>
