@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import {
+  addSvgFooter,
   buildGraphicLivrableHtml,
   buildInterpretationLivrableHtml,
   cropSvgViewBox,
@@ -1793,6 +1794,7 @@ if (
 }
 
 const exportCurrent = current ? stripSvgChartTitle(current) : "";
+const exportCurrentSvg = current ? addSvgFooter(stripSvgChartTitle(current)) : "";
 
 if (!current || activeTab === "interpretation") {
   setExportDialogOpen(false);
@@ -1805,7 +1807,7 @@ if (!current || activeTab === "interpretation") {
       if (exportKind === "svg") {
         downloadTextFile(
           `astromap-${activeTab}.svg`,
-          exportCurrent,
+          exportCurrentSvg,
           "image/svg+xml;charset=utf-8"
         );
         setExportDialogOpen(false);
