@@ -42,7 +42,6 @@ export function stripSvgChartTitle(svgText: string): string {
     "Transit chart",
     "Aspects planétaires",
     "Planetary aspects",
-    "© 2025 GéoAstro",
   ];
 
   Array.from(svg.querySelectorAll("text")).forEach((node) => {
@@ -361,29 +360,23 @@ export function buildInterpretationLivrableHtml(
       margin-top: 2mm;
     }
 
-    .chart-shell > svg,
-    .chart-shell svg {
-      display: block;
-      width: auto;
-      height: auto;
-      max-width: 200mm;
-      max-height: 230mm;
-      margin: 0 auto;
-    }
-
     .chart-shell > svg {
-      display: block;
-      width: auto;
+      width: 132%;
       height: auto;
-      max-width: 180mm;
-      max-height: 225mm;
-      margin: 0 auto;
+      max-height: 248mm;
+      display: block;
+      transform: scale(1.38);
+      transform-origin: center top;
     }
 
-    .chart-shell-ecliptic line,
-    .chart-shell-ecliptic path,
-    .chart-shell-ecliptic circle {
-      stroke-width: 2.5px !important;
+    .chart-shell svg {
+      max-width: 132%;
+    }
+
+    .chart-shell-ecliptic > svg,
+    .chart-shell-ecliptic svg {
+      transform: translateX(-18mm) scale(1.38);
+      transform-origin: center top;
     }
 
     .chart-shell-ret > svg,
