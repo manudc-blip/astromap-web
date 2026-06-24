@@ -591,7 +591,7 @@ export function buildInterpretationLivrableHtml(
     <div class="page-footer">${escapeHtml(footer)}</div>
   </section>
 
-  <section class="pdf-page chart-page">
+  <section class="pdf-page chart-page force-page-start">
     <h2 class="page-title">${escapeHtml(retTitle)}</h2>
     <div class="chart-shell chart-shell-ret">
       ${retSvg}
@@ -606,7 +606,7 @@ export function buildInterpretationLivrableHtml(
     <div class="page-footer">${escapeHtml(footer)}</div>
   </section>
 
-  <section class="pdf-page chart-page force-page-start">
+  <section class="pdf-page chart-page">
     <h2 class="page-title">${escapeHtml(aspectsTitle)}</h2>
     <div class="chart-shell chart-shell-aspects">
       ${aspectsSvg}
