@@ -572,7 +572,7 @@ export function buildInterpretationLivrableHtml(
         margin: 0 auto 16px auto;
         background: white;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-        padding: 24mm 8mm 28mm 8mm !important;
+        padding: 32mm 28mm 34mm 28mm !important;
         box-sizing: border-box;
       }
 
@@ -581,7 +581,7 @@ export function buildInterpretationLivrableHtml(
         margin: 0 auto 16px auto;
         background: white;
         box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-        padding: 26mm 32mm 30mm 32mm !important;
+        padding: 34mm 28mm 36mm 28mm !important;
         box-sizing: border-box;
       }
     }
