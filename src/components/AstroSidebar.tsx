@@ -104,6 +104,7 @@ export interface AstroSidebarProps {
 
   onSelectDnSuggestion?: (item: SidebarSuggestion) => void;
   onSelectCitySuggestion?: (item: SidebarSuggestion) => void;
+  onCloseCitySuggestions?: () => void;
 }
 
 const TEXT = {
