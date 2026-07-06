@@ -1045,9 +1045,10 @@ const mapped: CitySuggestion[] = results
     let score = 0;
 
     if (normalizeCityText(label) === qNorm) score += 100;
-    if (haystack.startsWith(qNorm)) score += 60;
+    if (normalizeCityText(label).startsWith(qNorm)) score += 80;
+    if (haystack.includes(qNorm)) score += 60;
     if (qTokens.every((token) => haystack.includes(token))) score += 40;
-    if (display.toLowerCase().includes("france")) score += 5;
+    if (display.toLowerCase().includes("france")) score += 10;
 
     return {
       id: `${item.name}-${item.lat}-${item.lon}-${index}`,
@@ -1060,13 +1061,13 @@ const mapped: CitySuggestion[] = results
       score,
     };
   })
-  .filter((item) => item.score >= 40)
+  .filter((item) => item.score > 0)
   .sort((a, b) => b.score - a.score)
   .slice(0, 8);
 
 setCitySuggestions(mapped);
 setShowCitySuggestions(mapped.length > 0);
-
+        
         setCitySuggestions(mapped);
         setShowCitySuggestions(mapped.length > 0);
       } catch {
