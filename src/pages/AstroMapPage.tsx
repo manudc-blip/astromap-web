@@ -114,6 +114,7 @@ type CitySuggestion = SidebarSuggestion & {
   lat: number;
   lon: number;
   tz: string;
+  score?: number;
 };
 
 type PageFormState = AstroFormState & {
@@ -1023,15 +1024,48 @@ useEffect(() => {
 
         if (cancelled) return;
 
-        const mapped: CitySuggestion[] = results.map((item, index) => ({
-          id: `${item.name}-${item.lat}-${item.lon}-${index}`,
-          label: item.name || item.display,
-          subLabel: item.display,
-          name: item.name || item.display,
-          lat: item.lat,
-          lon: item.lon,
-          tz: item.tz,
-        }));
+const normalizeCityText = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[-’']/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const qNorm = normalizeCityText(query);
+const qTokens = qNorm.split(" ").filter(Boolean);
+
+const mapped: CitySuggestion[] = results
+  .map((item, index) => {
+    const label = item.name || item.display;
+    const display = item.display || label;
+    const haystack = normalizeCityText(`${label} ${display}`);
+
+    let score = 0;
+
+    if (normalizeCityText(label) === qNorm) score += 100;
+    if (haystack.startsWith(qNorm)) score += 60;
+    if (qTokens.every((token) => haystack.includes(token))) score += 40;
+    if (display.toLowerCase().includes("france")) score += 5;
+
+    return {
+      id: `${item.name}-${item.lat}-${item.lon}-${index}`,
+      label,
+      subLabel: display,
+      name: label,
+      lat: item.lat,
+      lon: item.lon,
+      tz: item.tz,
+      score,
+    };
+  })
+  .filter((item) => item.score >= 40)
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 8);
+
+setCitySuggestions(mapped);
+setShowCitySuggestions(mapped.length > 0);
 
         setCitySuggestions(mapped);
         setShowCitySuggestions(mapped.length > 0);
