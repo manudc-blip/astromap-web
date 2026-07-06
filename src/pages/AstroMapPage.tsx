@@ -114,7 +114,6 @@ type CitySuggestion = SidebarSuggestion & {
   lat: number;
   lon: number;
   tz: string;
-  score?: number;
 };
 
 type PageFormState = AstroFormState & {
@@ -907,6 +906,10 @@ const fullAccessMode = trialMode ? false : accessParam === "full" || hasFullAcce
         "hour",
         "minute",
         "timeRef",
+        "cityQuery",
+        "latitude",
+        "longitude",
+        "tz",
       ].some((key) => key in patch);
 
     if (mustLeaveDnMode) {
@@ -1020,50 +1023,18 @@ useEffect(() => {
 
         if (cancelled) return;
 
-const normalizeCityText = (value: string) =>
-  value
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[-’']/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+        const mapped: CitySuggestion[] = results.map((item, index) => ({
+          id: `${item.name}-${item.lat}-${item.lon}-${index}`,
+          label: item.name || item.display,
+          subLabel: item.display,
+          name: item.name || item.display,
+          lat: item.lat,
+          lon: item.lon,
+          tz: item.tz,
+        }));
 
-const qNorm = normalizeCityText(query);
-const qTokens = qNorm.split(" ").filter(Boolean);
-
-const mapped: CitySuggestion[] = results
-  .map((item, index) => {
-    const label = item.name || item.display;
-    const display = item.display || label;
-    const haystack = normalizeCityText(`${label} ${display}`);
-
-    let score = 0;
-
-    if (normalizeCityText(label) === qNorm) score += 100;
-    if (normalizeCityText(label).startsWith(qNorm)) score += 80;
-    if (haystack.includes(qNorm)) score += 60;
-    if (qTokens.every((token) => haystack.includes(token))) score += 40;
-    if (display.toLowerCase().includes("france")) score += 10;
-
-    return {
-      id: `${item.name}-${item.lat}-${item.lon}-${index}`,
-      label,
-      subLabel: display,
-      name: label,
-      lat: item.lat,
-      lon: item.lon,
-      tz: item.tz,
-      score,
-    };
-  })
-  .filter((item) => item.score > 0)
-  .sort((a, b) => b.score - a.score)
-  .slice(0, 8);
-
-setCitySuggestions(mapped);
-setShowCitySuggestions(mapped.length > 0);
-        
+        setCitySuggestions(mapped);
+        setShowCitySuggestions(mapped.length > 0);
       } catch {
         if (!cancelled) {
           setCitySuggestions([]);
