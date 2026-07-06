@@ -1064,8 +1064,6 @@ const mapped: CitySuggestion[] = results
 setCitySuggestions(mapped);
 setShowCitySuggestions(mapped.length > 0);
         
-        setCitySuggestions(mapped);
-        setShowCitySuggestions(mapped.length > 0);
       } catch {
         if (!cancelled) {
           setCitySuggestions([]);
