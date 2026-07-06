@@ -342,6 +342,7 @@ export default function AstroSidebar({
   onExport,
   onSelectDnSuggestion,
   onSelectCitySuggestion,
+  onCloseCitySuggestions,
 }: AstroSidebarProps) {
 
   const t = TEXT[form.language];
@@ -362,6 +363,25 @@ export default function AstroSidebar({
   const transitMonthRef = useRef<HTMLInputElement | null>(null);
   const transitYearRef = useRef<HTMLInputElement | null>(null);
 
+const cityDropdownRef = useRef<HTMLDivElement | null>(null);
+
+useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (!showCitySuggestions) return;
+
+    const target = event.target as Node;
+
+    if (cityDropdownRef.current?.contains(target)) {
+      return;
+    }
+
+    onCloseCitySuggestions?.();
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, [showCitySuggestions, onCloseCitySuggestions]);
+  
   const getFocusedNatalDatePart = (): "day" | "month" | "year" => {
     const active = document.activeElement;
     if (active === natalMonthRef.current) return "month";
@@ -545,7 +565,7 @@ export default function AstroSidebar({
 
         <LabelWithIcon icon={iconLocation} text={t.citySearch} />
 
-        <div className="astromap-dropdown-host">
+        <div className="astromap-dropdown-host" ref={cityDropdownRef}>
           <input
             className="astromap-input"
             value={form.cityQuery}
