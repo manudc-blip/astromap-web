@@ -1023,15 +1023,45 @@ useEffect(() => {
 
         if (cancelled) return;
 
-        const mapped: CitySuggestion[] = results.map((item, index) => ({
-          id: `${item.name}-${item.lat}-${item.lon}-${index}`,
-          label: item.name || item.display,
-          subLabel: item.display,
-          name: item.name || item.display,
-          lat: item.lat,
-          lon: item.lon,
-          tz: item.tz,
-        }));
+const normalizeCityText = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[-’']/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const qNorm = normalizeCityText(query);
+
+const mapped: CitySuggestion[] = results
+  .map((item, index) => {
+    const label = item.name || item.display;
+    const display = item.display || label;
+    const labelNorm = normalizeCityText(label);
+    const displayNorm = normalizeCityText(display);
+
+    let score = 0;
+
+    if (labelNorm === qNorm) score += 100;
+    if (labelNorm.startsWith(qNorm)) score += 50;
+    if (displayNorm.includes(qNorm)) score += 20;
+    if (displayNorm.includes("france")) score += 5;
+
+    return {
+      id: `${item.name}-${item.lat}-${item.lon}-${index}`,
+      label,
+      subLabel: display,
+      name: label,
+      lat: item.lat,
+      lon: item.lon,
+      tz: item.tz,
+      score,
+    };
+  })
+  .filter((item) => item.score > 0)
+  .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
+  .slice(0, 8);
 
         setCitySuggestions(mapped);
         setShowCitySuggestions(mapped.length > 0);
