@@ -907,10 +907,6 @@ const fullAccessMode = trialMode ? false : accessParam === "full" || hasFullAcce
         "hour",
         "minute",
         "timeRef",
-        "cityQuery",
-        "latitude",
-        "longitude",
-        "tz",
       ].some((key) => key in patch);
 
     if (mustLeaveDnMode) {
