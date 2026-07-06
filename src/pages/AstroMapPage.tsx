@@ -2290,6 +2290,7 @@ const match = findPlanetFromSvgTarget(planetNode, planetMatchers, activeTab);
           showDnSuggestions={showDnSuggestions}
           dnSuggestions={dnSuggestions}
           showCitySuggestions={showCitySuggestions}
+          onCloseCitySuggestions={() => setShowCitySuggestions(false)}
           citySuggestions={citySuggestions}
           cityHint={isEn ? "Assisted entry" : "Saisie assistée"}
           onFormChange={patchForm}
