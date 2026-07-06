@@ -114,6 +114,7 @@ type CitySuggestion = SidebarSuggestion & {
   lat: number;
   lon: number;
   tz: string;
+  score?: number;
 };
 
 type PageFormState = AstroFormState & {
