@@ -434,29 +434,7 @@ useEffect(() => {
           <button
             type="button"
             className="astromap-ident-toggle"
-            onTouchStart={() => {
-              lastIdentTouchRef.current = Date.now();
-
-              const activeElement = document.activeElement;
-
-              if (
-                activeElement instanceof HTMLInputElement ||
-                activeElement instanceof HTMLTextAreaElement
-              ) {
-                activeElement.blur();
-              }
-
-              onToggleIdentMode?.();
-            }}
-            onClick={() => {
-              // Sur mobile, le changement a déjà été effectué
-              // au touchstart. On ignore le clic synthétique suivant.
-              if (Date.now() - lastIdentTouchRef.current < 1000) {
-                return;
-              }
-
-              onToggleIdentMode?.();
-            }}
+            onClick={onToggleIdentMode}
           >
             <img
               src={identIcon}
