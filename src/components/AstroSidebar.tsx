@@ -435,14 +435,24 @@ useEffect(() => {
             className="astromap-ident-toggle"
             onPointerDown={(e) => {
               if (e.pointerType === "touch") {
+                e.preventDefault();
+
                 const activeElement = document.activeElement;
 
                 if (activeElement instanceof HTMLElement) {
                   activeElement.blur();
                 }
               }
+
+              onToggleIdentMode?.();
             }}
-            onClick={onToggleIdentMode}
+            onClick={(e) => {
+              // Un clic clavier n'a pas de pointerdown :
+              // on conserve donc l'accessibilité Entrée / Espace.
+              if (e.detail === 0) {
+                onToggleIdentMode?.();
+              }
+            }}
           >
             <img
               src={identIcon}
