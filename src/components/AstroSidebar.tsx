@@ -364,6 +364,7 @@ export default function AstroSidebar({
   const transitYearRef = useRef<HTMLInputElement | null>(null);
 
 const cityDropdownRef = useRef<HTMLDivElement | null>(null);
+const lastIdentTouchRef = useRef(0);
 
 useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
@@ -433,7 +434,29 @@ useEffect(() => {
           <button
             type="button"
             className="astromap-ident-toggle"
-            onClick={onToggleIdentMode}
+            onTouchStart={() => {
+              lastIdentTouchRef.current = Date.now();
+
+              const activeElement = document.activeElement;
+
+              if (
+                activeElement instanceof HTMLInputElement ||
+                activeElement instanceof HTMLTextAreaElement
+              ) {
+                activeElement.blur();
+              }
+
+              onToggleIdentMode?.();
+            }}
+            onClick={() => {
+              // Sur mobile, le changement a déjà été effectué
+              // au touchstart. On ignore le clic synthétique suivant.
+              if (Date.now() - lastIdentTouchRef.current < 1000) {
+                return;
+              }
+
+              onToggleIdentMode?.();
+            }}
           >
             <img
               src={identIcon}
