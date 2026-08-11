@@ -364,6 +364,7 @@ export default function AstroSidebar({
   const transitYearRef = useRef<HTMLInputElement | null>(null);
 
 const cityDropdownRef = useRef<HTMLDivElement | null>(null);
+const identTouchHandledRef = useRef(false);
 
 useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
@@ -433,7 +434,29 @@ useEffect(() => {
           <button
             type="button"
             className="astromap-ident-toggle"
-            onClick={onToggleIdentMode}
+            onPointerDown={(e) => {
+              if (e.pointerType !== "touch") return;
+
+              e.preventDefault();
+
+              const activeElement = document.activeElement;
+
+              if (activeElement instanceof HTMLElement) {
+                activeElement.blur();
+              }
+
+              identTouchHandledRef.current = true;
+              onToggleIdentMode?.();
+
+              window.setTimeout(() => {
+                identTouchHandledRef.current = false;
+              }, 400);
+            }}
+            onClick={() => {
+              if (identTouchHandledRef.current) return;
+
+              onToggleIdentMode?.();
+            }}
           >
             <img
               src={identIcon}
