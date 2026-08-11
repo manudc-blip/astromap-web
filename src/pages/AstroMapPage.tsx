@@ -1133,36 +1133,61 @@ const mapped: CitySuggestion[] = results
       const [dd = "", mm = "", yyyy = ""] = rec.date ? rec.date.split("-") : [];
       const [hh = "", mi = ""] = rec.time ? rec.time.split(":") : [];
 
-      let nextLat = rec.lat;
-      let nextLon = rec.lon;
-      let nextTz = form.tz;
-      let nextCity = [rec.lieu, rec.pays].filter(Boolean).join(", ");
+let nextLat = rec.lat;
+let nextLon = rec.lon;
+let nextTz = "";
+let nextCity = [rec.lieu, rec.pays].filter(Boolean).join(", ");
 
-if (rec.lieu) {
+if (rec.lieu && Number(yyyy) >= 1900) {
   try {
-    const cityQuery = [rec.lieu, rec.pays].filter(Boolean).join(", ");
-    const cityMatches = await searchCities(cityQuery, language);
+    /*
+     * On cherche d'abord la ville seule.
+     * Les coordonnées de la DN servent ensuite à identifier
+     * précisément le bon résultat.
+     */
+    const cityMatches = await searchCities(rec.lieu, language);
 
     const best =
       cityMatches.find((c) => {
         if (nextLat == null || nextLon == null) return false;
-        return Math.abs(c.lat - nextLat) < 0.5 && Math.abs(c.lon - nextLon) < 0.5;
+
+        return (
+          Math.abs(c.lat - nextLat) < 0.5 &&
+          Math.abs(c.lon - nextLon) < 0.5
+        );
       }) || null;
 
-    if (best && Number(yyyy) >= 1900 && best.tz) {
+    if (best?.tz) {
       nextTz = best.tz;
     }
   } catch {
-    // on garde les valeurs DN
+    // Le contrôle ci-dessous empêchera l'utilisation d'un mauvais fuseau.
   }
 }
 
-      if (Number(yyyy) < 1900 && nextLon != null) {
-        const lmt = lonToLmtTz(nextLon);
-        if (lmt) nextTz = lmt;
-      }
+if (Number(yyyy) < 1900 && nextLon != null) {
+  const lmt = lonToLmtTz(nextLon);
 
-      const finalTz = nextTz || form.tz;
+  if (lmt) {
+    nextTz = lmt;
+  }
+}
+
+/*
+ * En mode DN, on ne réutilise jamais silencieusement
+ * le fuseau du thème précédent.
+ */
+if (!nextTz) {
+  setError(
+    language === "en"
+      ? `Unable to determine the time zone for ${nextCity}.`
+      : `Impossible de déterminer le fuseau horaire pour ${nextCity}.`
+  );
+
+  return;
+}
+
+const finalTz = nextTz;
 
       setCurrentThemeOwnerTitle(
         [rec.prenom, rec.nom].filter(Boolean).join(" ").trim()
