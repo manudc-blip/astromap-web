@@ -1178,7 +1178,6 @@ if (!best) {
 if (best?.tz) {
   nextTz = best.tz;
 }
-    }
   } catch {
     // Le contrôle ci-dessous empêchera l'utilisation d'un mauvais fuseau.
   }
