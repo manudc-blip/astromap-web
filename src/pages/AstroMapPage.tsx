@@ -1145,20 +1145,39 @@ if (rec.lieu && Number(yyyy) >= 1900) {
      * Les coordonnées de la DN servent ensuite à identifier
      * précisément le bon résultat.
      */
-    const cityMatches = await searchCities(rec.lieu, language);
+let cityMatches = await searchCities(rec.lieu, language);
 
-    const best =
-      cityMatches.find((c) => {
-        if (nextLat == null || nextLon == null) return false;
+const findNearbyCity = (matches: typeof cityMatches) =>
+  matches.find((c) => {
+    if (nextLat == null || nextLon == null) return false;
 
-        return (
-          Math.abs(c.lat - nextLat) < 0.5 &&
-          Math.abs(c.lon - nextLon) < 0.5
-        );
-      }) || null;
+    return (
+      Math.abs(c.lat - nextLat) < 0.5 &&
+      Math.abs(c.lon - nextLon) < 0.5
+    );
+  }) || null;
 
-    if (best?.tz) {
-      nextTz = best.tz;
+let best = findNearbyCity(cityMatches);
+
+/*
+ * Certaines DN contiennent un arrondissement ou un numéro
+ * dans le nom de la ville : "Paris 17", "Paris 8", "Lyon 3", etc.
+ * Si la recherche exacte échoue, on réessaie avec le nom simplifié.
+ */
+if (!best) {
+  const simplifiedLieu = rec.lieu
+    .replace(/\s+\d{1,2}(?:er|e|ème|eme)?$/i, "")
+    .trim();
+
+  if (simplifiedLieu && simplifiedLieu !== rec.lieu.trim()) {
+    cityMatches = await searchCities(simplifiedLieu, language);
+    best = findNearbyCity(cityMatches);
+  }
+}
+
+if (best?.tz) {
+  nextTz = best.tz;
+}
     }
   } catch {
     // Le contrôle ci-dessous empêchera l'utilisation d'un mauvais fuseau.
