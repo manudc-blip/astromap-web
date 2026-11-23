@@ -1147,15 +1147,45 @@ if (rec.lieu && Number(yyyy) >= 1900) {
      */
 let cityMatches = await searchCities(rec.lieu, language);
 
-const findNearbyCity = (matches: typeof cityMatches) =>
-  matches.find((c) => {
-    if (nextLat == null || nextLon == null) return false;
+const findNearbyCity = (matches: typeof cityMatches) => {
+  if (nextLat == null || nextLon == null) return null;
 
-    return (
-      Math.abs(c.lat - nextLat) < 0.5 &&
-      Math.abs(c.lon - nextLon) < 0.5
+  const normalize = (s: string) =>
+    s.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[-’']/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const requestedName = normalize(rec.lieu);
+
+  const candidates = matches
+    .filter((c) => c.tz)
+    .map((c) => {
+      const latDiff = Math.abs(c.lat - nextLat);
+      const lonDiff = Math.abs(c.lon - nextLon);
+      const distance = Math.hypot(
+        latDiff,
+        lonDiff * Math.cos(nextLat * Math.PI / 180)
+      );
+
+      return {
+        city: c,
+        distance,
+        exactName: normalize(c.name) === requestedName,
+      };
+    })
+    .filter(({ distance, exactName }) =>
+      distance < 0.5 || (exactName && distance < 2)
+    )
+    .sort((a, b) =>
+      Number(b.exactName) - Number(a.exactName) ||
+      a.distance - b.distance
     );
-  }) || null;
+
+  return candidates[0]?.city ?? null;
+};
 
 let best = findNearbyCity(cityMatches);
 
