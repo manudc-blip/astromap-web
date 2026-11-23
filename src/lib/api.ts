@@ -194,8 +194,6 @@ async function apiText(path: string, init?: RequestInit): Promise<string> {
 
 const accessHeaders = getAccessHeaders();
 
-console.log("ACCESS HEADERS", accessHeaders);
-
 const requestPromise = fetch(`${API_BASE}${path}`, {
   ...init,
   headers: {
