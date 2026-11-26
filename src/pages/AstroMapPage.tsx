@@ -1162,6 +1162,7 @@ const mapped: CitySuggestion[] = results
         year: yyyy || prev.year,
         hour: hh || prev.hour,
         minute: mi || prev.minute,
+        timeRef: "HO",
         cityQuery: nextCity,
         latitude:
           nextLat != null ? formatCoordForMode(nextLat, coordsDisplayMode) : "",
