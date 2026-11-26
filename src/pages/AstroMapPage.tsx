@@ -46,10 +46,10 @@ import {
 import {
   buildDnSubLabel,
   loadDnDatabase,
-  lonToLmtTz,
   searchDnRecords,
   type DnRecord,
 } from "../lib/dn";
+
 import { buildPlanetDetails, getPlanetNames } from "../lib/details";
 import type {
   AstroFormState,
@@ -1133,109 +1133,22 @@ const mapped: CitySuggestion[] = results
       const [dd = "", mm = "", yyyy = ""] = rec.date ? rec.date.split("-") : [];
       const [hh = "", mi = ""] = rec.time ? rec.time.split(":") : [];
 
-let nextLat = rec.lat;
-let nextLon = rec.lon;
-let nextTz = "";
-let nextCity = [rec.lieu, rec.pays].filter(Boolean).join(", ");
+      const nextLat = rec.lat;
+      const nextLon = rec.lon;
+      const nextCity = [rec.lieu, rec.pays].filter(Boolean).join(", ");
 
-if (rec.lieu && Number(yyyy) >= 1900) {
-  try {
-    /*
-     * On cherche d'abord la ville seule.
-     * Les coordonnées de la DN servent ensuite à identifier
-     * précisément le bon résultat.
-     */
-let cityMatches = await searchCities(rec.lieu, language);
+      // Fuseau horaire directement issu de la base DN.
+      const finalTz = (rec.fuseau || "").trim();
 
-const findNearbyCity = (matches: typeof cityMatches) => {
-  if (nextLat == null || nextLon == null) return null;
-
-  const normalize = (s: string) =>
-    s.toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[-’']/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-
-  const requestedName = normalize(rec.lieu);
-
-  const candidates = matches
-    .filter((c) => c.tz)
-    .map((c) => {
-      const latDiff = Math.abs(c.lat - nextLat);
-      const lonDiff = Math.abs(c.lon - nextLon);
-      const distance = Math.hypot(
-        latDiff,
-        lonDiff * Math.cos(nextLat * Math.PI / 180)
-      );
-
-      return {
-        city: c,
-        distance,
-        exactName: normalize(c.name) === requestedName,
-      };
-    })
-    .filter(({ distance, exactName }) =>
-      distance < 0.5 || (exactName && distance < 2)
-    )
-    .sort((a, b) =>
-      Number(b.exactName) - Number(a.exactName) ||
-      a.distance - b.distance
-    );
-
-  return candidates[0]?.city ?? null;
-};
-
-let best = findNearbyCity(cityMatches);
-
-/*
- * Certaines DN contiennent un arrondissement ou un numéro
- * dans le nom de la ville : "Paris 17", "Paris 8", "Lyon 3", etc.
- * Si la recherche exacte échoue, on réessaie avec le nom simplifié.
- */
-if (!best) {
-  const simplifiedLieu = rec.lieu
-    .replace(/\s+\d{1,2}(?:er|e|ème|eme)?$/i, "")
-    .trim();
-
-  if (simplifiedLieu && simplifiedLieu !== rec.lieu.trim()) {
-    cityMatches = await searchCities(simplifiedLieu, language);
-    best = findNearbyCity(cityMatches);
-  }
-}
-
-if (best?.tz) {
-  nextTz = best.tz;
-}
-  } catch {
-    // Le contrôle ci-dessous empêchera l'utilisation d'un mauvais fuseau.
-  }
-}
-
-if (Number(yyyy) < 1900 && nextLon != null) {
-  const lmt = lonToLmtTz(nextLon);
-
-  if (lmt) {
-    nextTz = lmt;
-  }
-}
-
-/*
- * En mode DN, on ne réutilise jamais silencieusement
- * le fuseau du thème précédent.
- */
-if (!nextTz) {
-  setError(
-    language === "en"
-      ? `Unable to determine the time zone for ${nextCity}.`
-      : `Impossible de déterminer le fuseau horaire pour ${nextCity}.`
-  );
-
-  return;
-}
-
-const finalTz = nextTz;
+      // Ne jamais réutiliser le fuseau d'une autre personnalité.
+      if (!finalTz) {
+        setError(
+          language === "en"
+            ? `Missing time zone in the DN database for ${nextCity}.`
+            : `Fuseau horaire absent dans la base DN pour ${nextCity}.`
+        );
+        return;
+      }
 
       setCurrentThemeOwnerTitle(
         [rec.prenom, rec.nom].filter(Boolean).join(" ").trim()
@@ -1276,7 +1189,7 @@ const finalTz = nextTz;
       setDnSuggestions([]);
       setShowDnSuggestions(false);
     },
-    [coordsDisplayMode, form.tz, language]
+    [coordsDisplayMode, language]
   );
 
 
