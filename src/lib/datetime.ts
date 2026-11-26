@@ -9,7 +9,13 @@ const pad2 = (v: string | number) => String(v).padStart(2, "0");
 
 const normalizeLuxonZone = (tz: string) => {
   const trimmed = (tz || "").trim();
-  if (!trimmed) return "Europe/Paris";
+
+  if (!trimmed) {
+    throw new Error(
+      "Fuseau horaire manquant : impossible de calculer le thème."
+    );
+  }
+
   if (/^[+-]\d{2}:\d{2}$/.test(trimmed)) {
     return `UTC${trimmed}`;
   }
