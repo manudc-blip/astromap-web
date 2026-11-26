@@ -207,7 +207,7 @@ export function lonToLmtTz(lon: number): string {
 }
 
 export async function loadDnDatabase(): Promise<DnRecord[]> {
-  const res = await fetch("/data/dn_database.csv", { cache: "force-cache" });
+  const res = await fetch("/data/dn_database.csv", { cache: "no-cache" });
   if (!res.ok) {
     throw new Error(`DN CSV introuvable (${res.status})`);
   }
