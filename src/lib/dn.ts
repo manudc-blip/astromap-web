@@ -13,8 +13,10 @@ export type DnRecord = {
   pays: string;
   lat: number | null;
   lon: number | null;
+  fuseau: string;
   source: string;
   searchKeys: string[];
+
 };
 
 function normalizeText(value: string) {
@@ -224,7 +226,16 @@ export async function loadDnDatabase(): Promise<DnRecord[]> {
       const pays = (row["Pays"] || row["pays"] || "").trim();
       const latRaw = (row["Latitude"] || row["lat"] || row["latitude"] || "").trim();
       const lonRaw = (row["Longitude"] || row["lon"] || row["longitude"] || "").trim();
+
+      const fuseau = (
+        row["Fuseau"] ||
+        row["FUSEAU"] ||
+        row["fuseau"] ||
+        ""
+      ).trim();
+
       const source = (row["Source"] || row["source"] || row["SOURCE"] || "").trim();
+
 
       if (!nom && !prenom) return null;
 
@@ -262,8 +273,10 @@ export async function loadDnDatabase(): Promise<DnRecord[]> {
         pays,
         lat,
         lon,
+        fuseau,
         source,
         searchKeys,
+
       };
     })
     .filter((row): row is DnRecord => !!row);
